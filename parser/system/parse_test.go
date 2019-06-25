@@ -1,11 +1,12 @@
 package system_test
 
 import (
-	"dmidecode/parser/system"
-	"dmidecode/smbios"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
+
+	"dmidecode/parser/system"
+	"dmidecode/smbios"
 )
 
 var (

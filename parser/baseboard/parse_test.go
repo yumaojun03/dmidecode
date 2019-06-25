@@ -1,11 +1,12 @@
 package baseboard_test
 
 import (
-	"dmidecode/parser/baseboard"
-	"dmidecode/smbios"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
+
+	"dmidecode/parser/baseboard"
+	"dmidecode/smbios"
 )
 
 var (

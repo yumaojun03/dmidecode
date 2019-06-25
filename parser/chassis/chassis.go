@@ -1,8 +1,9 @@
 package chassis
 
 import (
-	"dmidecode/smbios"
 	"fmt"
+
+	"dmidecode/smbios"
 )
 
 // Information 底座信息

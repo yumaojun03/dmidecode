@@ -1,9 +1,9 @@
 package bios
 
 import (
-	"dmidecode/smbios"
-
 	"fmt"
+
+	"dmidecode/smbios"
 )
 
 // Information bios信息

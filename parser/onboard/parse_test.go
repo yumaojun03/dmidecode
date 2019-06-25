@@ -1,11 +1,12 @@
 package onboard_test
 
 import (
-	"dmidecode/parser/onboard"
-	"dmidecode/smbios"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
+
+	"dmidecode/parser/onboard"
+	"dmidecode/smbios"
 )
 
 var (

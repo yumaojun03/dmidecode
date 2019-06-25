@@ -1,11 +1,12 @@
 package bios_test
 
 import (
-	"dmidecode/parser/bios"
-	"dmidecode/smbios"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
+
+	"dmidecode/parser/bios"
+	"dmidecode/smbios"
 )
 
 var (

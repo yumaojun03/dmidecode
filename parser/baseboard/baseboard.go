@@ -1,8 +1,9 @@
 package baseboard
 
 import (
-	"dmidecode/smbios"
 	"fmt"
+
+	"dmidecode/smbios"
 )
 
 // Information 主板信息

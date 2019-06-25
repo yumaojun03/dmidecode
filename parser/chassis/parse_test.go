@@ -1,11 +1,12 @@
 package chassis_test
 
 import (
-	"dmidecode/parser/chassis"
-	"dmidecode/smbios"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
+
+	"dmidecode/parser/chassis"
+	"dmidecode/smbios"
 )
 
 var (

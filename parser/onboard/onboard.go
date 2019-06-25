@@ -1,8 +1,9 @@
 package onboard
 
 import (
-	"dmidecode/smbios"
 	"fmt"
+
+	"dmidecode/smbios"
 )
 
 // ExtendedInformation 扩展设备信息
@@ -35,7 +36,7 @@ func (o ExtendedInformation) String() string {
 		"\tDevice Type: %s\n"+
 		"\tDevice Status: %s\n"+
 		"\tDevice Type Instance: %d\n"+
-		"%s\n",
+		"\t%s\n",
 		o.ReferenceDesignation,
 		o.DeviceType,
 		o.DeviceStatus,

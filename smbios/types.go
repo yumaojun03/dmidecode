@@ -1,10 +1,10 @@
-package parser
+package smbios
 
-// SMBIOSStructureType Structure definition type
-type SMBIOSStructureType byte
+// StructureType Structure definition type
+type StructureType byte
 
 const (
-	BIOS SMBIOSStructureType = iota
+	BIOS StructureType = iota
 	System
 	BaseBoard
 	Chassis
@@ -46,12 +46,12 @@ const (
 	PowerSupply
 	AdditionalInformation
 	OnBoardDevicesExtendedInformation
-	ManagementControllerHostInterface                     /*42*/
-	Inactive                          SMBIOSStructureType = 126
-	EndOfTable                        SMBIOSStructureType = 127
+	ManagementControllerHostInterface               /*42*/
+	Inactive                          StructureType = 126
+	EndOfTable                        StructureType = 127
 )
 
-func (b SMBIOSStructureType) String() string {
+func (b StructureType) String() string {
 	types := [...]string{
 		"BIOS", /* 0 */
 		"System",

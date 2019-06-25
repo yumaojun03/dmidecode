@@ -1,6 +1,8 @@
 package chassis
 
-import "dmidecode/smbios"
+import (
+	"dmidecode/smbios"
+)
 
 // Parse 解析底座信息
 func Parse(s *smbios.Structure) (*Information, error) {

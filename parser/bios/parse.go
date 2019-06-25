@@ -20,10 +20,10 @@ func Parse(s *smbios.Structure) (*Information, error) {
 		Characteristics:        Characteristics(smbios.U64(data[0x06:0x08])),
 	}
 
-	if s.Header.Length >= 0x13 {
+	if s.Header.Length >= 0x08 {
 		bi.CharacteristicsExt1 = Ext1(data[0x08])
 	}
-	if s.Header.Length >= 0x14 {
+	if s.Header.Length >= 0x09 {
 		bi.CharacteristicsExt2 = Ext2(data[0x09])
 	}
 

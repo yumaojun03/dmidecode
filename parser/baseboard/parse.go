@@ -1,6 +1,8 @@
 package baseboard
 
-import "dmidecode/smbios"
+import (
+	"dmidecode/smbios"
+)
 
 // Parse 解析
 func Parse(s *smbios.Structure) (*Information, error) {
