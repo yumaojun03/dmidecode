@@ -5,8 +5,8 @@ import (
 	"fmt"
 )
 
-// Device 内存设备
-type Device struct {
+// MemoryDevice 内存设备
+type MemoryDevice struct {
 	smbios.Header
 	PhysicalMemoryArrayHandle  uint16
 	ErrorInformationHandle     uint16
@@ -32,7 +32,7 @@ type Device struct {
 	ConfiguredVoltage          uint16
 }
 
-func (m Device) String() string {
+func (m MemoryDevice) String() string {
 	return fmt.Sprintf("Memory Device\n"+
 		"\tPhysical Memory Array Handle: %d\n"+
 		"\tMemory Error Information Handle: %d\n"+
@@ -50,8 +50,8 @@ func (m Device) String() string {
 		"\tSerial Number: %s\n"+
 		"\tAsset Tag: %s\n"+
 		"\tPart Number: %s\n"+
-		"\tAttributes: %s\n"+
-		"\tExtended Size: %s\n"+
+		"\tAttributes: %x\n"+
+		"\tExtended Size: %d\n"+
 		"\tConfigured Memory Clock Speed: %d\n"+
 		"\tMinimum voltage: %d\n"+
 		"\tMaximum voltage: %d\n"+
@@ -66,6 +66,7 @@ func (m Device) String() string {
 		m.DeviceLocator,
 		m.BankLocator,
 		m.Type,
+		m.TypeDetail,
 		m.Speed,
 		m.Manufacturer,
 		m.SerialNumber,

@@ -5,7 +5,8 @@ import (
 	"fmt"
 )
 
-type Information struct {
+// Processor CPU信息
+type Processor struct {
 	smbios.Header
 	SocketDesignation string
 	ProcessorType     ProcessorType
@@ -32,7 +33,7 @@ type Information struct {
 	Family2           ProcessorFamily
 }
 
-func (p Information) String() string {
+func (p Processor) String() string {
 	return fmt.Sprintf("Processor Information\n"+
 		"\tSocket Designation: %s\n"+
 		"\tProcessor Type: %s\n"+

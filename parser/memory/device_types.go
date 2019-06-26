@@ -1,5 +1,9 @@
 package memory
 
+import (
+	"strings"
+)
+
 type MemoryDeviceFormFactor byte
 
 const (
@@ -64,9 +68,16 @@ const (
 	MemoryDeviceTypeDDR
 	MemoryDeviceTypeDDR2
 	MemoryDeviceTypeDDR2FB_DIMM
-	MemoryDeviceTypeReserved
+	_
+	_
+	_
 	MemoryDeviceTypeDDR3
 	MemoryDeviceTypeFBD2
+	MemoryDeviceTypeDDR4
+	MemoryDeviceTypeLPDDR
+	MemoryDeviceTypeLPDDR2
+	MemoryDeviceTypeLPDDR3
+	MemoryDeviceTypeLPDDR4
 )
 
 func (m MemoryDeviceType) String() string {
@@ -91,14 +102,21 @@ func (m MemoryDeviceType) String() string {
 		"DDR",
 		"DDR2",
 		"DDR2 FB-DIMM",
-		"Reserved",
+		"Reserved1",
+		"Reserved2",
+		"Reserved3",
 		"DDR3",
 		"FBD2",
+		"DDR4",
+		"LPDDR",
+		"LPDDR2",
+		"LPDDR3",
+		"LPDDR4",
 	}
 	return types[m-1]
 }
 
-type MemoryDeviceTypeDetail byte
+type MemoryDeviceTypeDetail uint16
 
 const (
 	MemoryDeviceTypeDetailReserved MemoryDeviceTypeDetail = 1 + iota
@@ -138,5 +156,13 @@ func (m MemoryDeviceTypeDetail) String() string {
 		"Unbuffered (Unregistered)",
 		"LRDIMM",
 	}
-	return details[m-1]
+
+	d := []string{}
+	for i := 1; i <= 16; i++ {
+		if m&(1<<uint(i)) != 0 {
+			d = append(d, details[i])
+		}
+	}
+
+	return strings.Join(d, ",")
 }

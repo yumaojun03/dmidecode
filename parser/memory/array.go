@@ -5,6 +5,7 @@ import (
 	"fmt"
 )
 
+// PhysicalMemoryArray todo
 type PhysicalMemoryArray struct {
 	smbios.Header
 	Location                PhysicalMemoryArrayLocation
