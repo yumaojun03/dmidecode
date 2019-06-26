@@ -27,7 +27,7 @@ func (c Cache) String() string {
 		"\tInstalled Size: %s\n"+
 		"\tSupportedSRAM Type: %s\n"+
 		"\tCurrentSRAM Type: %s\n"+
-		"\tCache Speed: %s\n"+
+		"\tCache Speed: %d\n"+
 		"\tError Correction Type: %s\n"+
 		"\tSystem Cache Type: %s\n"+
 		"\tAssociativity: %s",

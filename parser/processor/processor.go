@@ -47,9 +47,9 @@ func (p Processor) String() string {
 		"\tCurrent Speed: %d\n"+
 		"\tStatus: %s\n"+
 		"\tUpgrade: %s\n"+
-		"\tL1 Cache Handle: %d\n"+
-		"\tL2 Cache Handle: %d\n"+
-		"\tL3 Cache Handle: %d\n"+
+		"\tL1 Cache Handle: %x\n"+
+		"\tL2 Cache Handle: %x\n"+
+		"\tL3 Cache Handle: %x\n"+
 		"\tSerial Number: %s\n"+
 		"\tAsset Tag: %s\n"+
 		"\tPart Number: %s\n"+

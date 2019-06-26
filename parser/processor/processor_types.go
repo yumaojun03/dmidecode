@@ -28,8 +28,7 @@ func (p ProcessorType) String() string {
 type ProcessorFamily uint16
 
 const (
-	_ ProcessorFamily = iota
-	ProcessorOther
+	ProcessorOther ProcessorFamily = 1 + iota
 	ProcessorUnknown
 	ProcessorProcessorFamily8086
 	ProcessorProcessorFamily80286
@@ -299,8 +298,6 @@ const (
 	ProcessorWinChip
 	ProcessorDSP
 	ProcessorVideoProcessor
-	_
-	_
 )
 
 func (p ProcessorFamily) String() string {
@@ -605,19 +602,21 @@ func (p ProcessorVoltage) String() string {
 	if p&ProcessorVoltageLegacy == 0 {
 		return voltages[p]
 	}
-	return fmt.Sprintf("%.1f", (p-0x80)/10)
+	return fmt.Sprintf("%.1f", float64(p-0x80)/10)
 }
 
 type ProcessorStatus byte
 
 const (
-	ProcessorStatusUnknown ProcessorStatus = 1 << iota
+	ProcessorStatusUnknown ProcessorStatus = iota
 	ProcessorStatusEnabled
 	ProcessorStatusDisabledByUser
 	ProcessorStatusDisabledByBIOS
 	ProcessorStatusIdle
 	ProcessorStatusReserved
 	ProcessorStatusOther
+	ProcessorCPUSocketPopulated
+	ProcessorCPUSocketUnpopulated
 )
 
 func (p ProcessorStatus) String() string {
@@ -629,6 +628,8 @@ func (p ProcessorStatus) String() string {
 		"CPU is Idle, waiting to be enabled",
 		"Reserved",
 		"Other",
+		"Populated",
+		"Unpopulated",
 	}
 	return status[p]
 }

@@ -81,7 +81,7 @@ func (c CacheConfiguration) String() string {
 		"\tSocketed: %v\n"+
 		"\tLocation: %s\n"+
 		"\tEnabled: %v\n"+
-		"\tMode:\n\t\t",
+		"\tMode: %s\n\t\t",
 		c.Level,
 		c.Socketed,
 		c.Location,
@@ -117,7 +117,7 @@ func NewCacheSize(u uint16) CacheSize {
 }
 
 func (c CacheSize) String() string {
-	return fmt.Sprintf("%s * %s", c.Size, c.Granularity)
+	return fmt.Sprintf("%d * %s", c.Size, c.Granularity)
 }
 
 type CacheSRAMType uint16
