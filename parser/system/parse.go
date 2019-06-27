@@ -19,7 +19,7 @@ func Parse(s *smbios.Structure) (*Information, error) {
 		SerialNumber: s.GetString(0x3),
 		UUID:         uuid(data[0x04:0x14], s.GetString(2)),
 		WakeUpType:   WakeUpType(data[0x14]),
-		SKUNumber:    s.GetString(0xf),
+		SKUNumber:    s.GetString(0x15),
 		Family:       s.GetString(0x16),
 	}, nil
 }

@@ -14,7 +14,7 @@ func ParseProcessor(s *smbios.Structure) (*Processor, error) {
 		Manufacturer:      s.GetString(0x3),
 		// TODO:
 		//pi.ProcessorID
-		Version:         s.GetString(0x6),
+		Version:         s.GetString(0xc),
 		Voltage:         ProcessorVoltage(data[0xD]),
 		ExternalClock:   smbios.U16(data[0xE:0x10]),
 		MaxSpeed:        smbios.U16(data[0x10:0x12]),
