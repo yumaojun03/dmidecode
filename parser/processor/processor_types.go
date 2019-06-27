@@ -1,6 +1,9 @@
 package processor
 
-import "fmt"
+import (
+	"fmt"
+	"strings"
+)
 
 type ProcessorType byte
 
@@ -613,10 +616,9 @@ const (
 	ProcessorStatusDisabledByUser
 	ProcessorStatusDisabledByBIOS
 	ProcessorStatusIdle
-	ProcessorStatusReserved
+	_
+	_
 	ProcessorStatusOther
-	ProcessorCPUSocketPopulated
-	ProcessorCPUSocketUnpopulated
 )
 
 func (p ProcessorStatus) String() string {
@@ -627,11 +629,22 @@ func (p ProcessorStatus) String() string {
 		"Disabled By BIOSa(POST Error)",
 		"CPU is Idle, waiting to be enabled",
 		"Reserved",
+		"Reserved",
 		"Other",
-		"Populated",
-		"Unpopulated",
 	}
-	return status[p]
+
+	resp := []string{}
+	fmt.Println(uint8(p) & 64)
+	switch uint8(p) & 64 {
+	case 0:
+		resp = append(resp, "Unpopulated")
+	case 64:
+		resp = append(resp, "Populated")
+	}
+
+	resp = append(resp, status[uint8(p)&7])
+
+	return strings.Join(resp, ",")
 }
 
 type ProcessorUpgrade byte
@@ -737,7 +750,7 @@ func (p ProcessorUpgrade) String() string {
 type ProcessorCharacteristics uint16
 
 const (
-	ProcessorCharacteristicsReserved ProcessorCharacteristics = 1 << iota
+	ProcessorCharacteristicsReserved ProcessorCharacteristics = 1
 	ProcessorCharacteristicsUnknown
 	ProcessorCharacteristics64_bitCapable
 	ProcessorCharacteristicsMulti_Core
@@ -758,5 +771,13 @@ func (p ProcessorCharacteristics) String() string {
 		"Enhanced Virtualization",
 		"Power/Performance Control",
 	}
-	return chars[p]
+
+	resp := []string{}
+	for i := 1; i <= 16; i++ {
+		if p&(1<<uint(i)) != 0 {
+			resp = append(resp, chars[i])
+		}
+	}
+
+	return strings.Join(resp, ",")
 }

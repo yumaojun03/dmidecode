@@ -25,16 +25,23 @@ var (
 	cs = &smbios.Structure{
 		Header: smbios.Header{
 			Type:   7,
-			Length: 23,
-			Handle: 4096,
+			Length: 19,
+			Handle: 1796,
 		},
-		Formatted: []byte{0x3, 0x3, 0x6, 0x0, 0x0, 0x0, 0x30, 0xfe, 0xff, 0x18, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0},
+		Formatted: []byte{0x0, 0x81, 0x1, 0x0, 0xa, 0x0, 0xa, 0x2, 0x0, 0x2, 0x0, 0x0, 0x5, 0x5, 0x7},
 		Strings:   []string{},
 	}
 )
 
 func TestParseProcessor(t *testing.T) {
 	bios, err := processor.ParseProcessor(ps)
+	if assert.NoError(t, err) {
+		t.Log(bios)
+	}
+}
+
+func TestParseCache(t *testing.T) {
+	bios, err := processor.ParseCache(cs)
 	if assert.NoError(t, err) {
 		t.Log(bios)
 	}

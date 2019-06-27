@@ -5,6 +5,7 @@ import (
 	"fmt"
 )
 
+// SystemSlot todo
 type SystemSlot struct {
 	smbios.Header
 	Designation          string
@@ -21,18 +22,19 @@ type SystemSlot struct {
 }
 
 func (s SystemSlot) String() string {
-	return fmt.Sprintf("System Slot %s\n"+
+	return fmt.Sprintf("System Slot %d\n"+
 		"\tSlot Designation: %s\n"+
 		"\tSlot Type: %s\n"+
 		"\tSlot Data Bus Width: %s\n"+
 		"\tCurrent Usage: %s\n"+
 		"\tSlot Length: %s\n"+
-		"\tSlot ID: %s\n"+
+		"\tSlot ID: %d\n"+
 		"\tSlot Characteristics1: %s\n"+
 		"\tSlot Characteristics2: %s\n"+
-		"\tSegment Group Number: %s\n"+
-		"\tBus Number: %s\n"+
-		"\tDevice/Function Number: %s",
+		"\tSegment Group Number: %x\n"+
+		"\tBus Number: %x\n"+
+		"\tDevice/Function Number: %x",
+		s.ID,
 		s.Designation,
 		s.Type,
 		s.DataBusWidth,

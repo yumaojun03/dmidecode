@@ -51,7 +51,7 @@ func ParseCache(s *smbios.Structure) (*Cache, error) {
 		CacheSpeed:          CacheSpeed(data[0x0B]),
 		ErrorCorrectionType: CacheErrorCorrectionType(data[0xC]),
 		SystemCacheType:     CacheSystemCacheType(data[0xD]),
-		Associativity:       CacheAssociativity(data[0xF]),
+		Associativity:       CacheAssociativity(data[0xE]),
 	}
 
 	return cache, nil

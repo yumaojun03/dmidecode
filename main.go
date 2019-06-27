@@ -4,7 +4,10 @@ import (
 	"dmidecode/parser/baseboard"
 	"dmidecode/parser/bios"
 	"dmidecode/parser/chassis"
+	"dmidecode/parser/memory"
 	"dmidecode/parser/onboard"
+	"dmidecode/parser/processor"
+	"dmidecode/parser/slot"
 	"dmidecode/smbios"
 	"fmt"
 )
@@ -47,6 +50,51 @@ func main() {
 		case smbios.OnBoardDevicesExtendedInformation:
 			fmt.Println(s)
 			info, err := onboard.Parse(s)
+			if err != nil {
+				panic(err)
+			}
+
+			fmt.Println(info)
+
+		case smbios.Processor:
+			fmt.Println(s)
+			info, err := processor.ParseProcessor(s)
+			if err != nil {
+				panic(err)
+			}
+
+			fmt.Println(info)
+
+		case smbios.Cache:
+			fmt.Println(s)
+			info, err := processor.ParseCache(s)
+			if err != nil {
+				panic(err)
+			}
+
+			fmt.Println(info)
+
+		case smbios.PhysicalMemoryArray:
+			fmt.Println(s)
+			info, err := memory.ParseMemoryArray(s)
+			if err != nil {
+				panic(err)
+			}
+
+			fmt.Println(info)
+
+		case smbios.MemoryDevice:
+			fmt.Println(s)
+			info, err := memory.ParseMemoryDevice(s)
+			if err != nil {
+				panic(err)
+			}
+
+			fmt.Println(info)
+
+		case smbios.SystemSlots:
+			fmt.Println(s)
+			info, err := slot.Parse(s)
 			if err != nil {
 				panic(err)
 			}

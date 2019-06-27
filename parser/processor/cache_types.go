@@ -81,7 +81,7 @@ func (c CacheConfiguration) String() string {
 		"\tSocketed: %v\n"+
 		"\tLocation: %s\n"+
 		"\tEnabled: %v\n"+
-		"\tMode: %s\n\t\t",
+		"\tMode: %s\t\t",
 		c.Level,
 		c.Socketed,
 		c.Location,

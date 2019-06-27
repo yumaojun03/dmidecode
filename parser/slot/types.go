@@ -22,7 +22,23 @@ const (
 	TypeAGP4X
 	TypePCI_X
 	TypeAGP8X
-	TypePC_98C20
+	TYPEM2Socket1DP
+	TYPEM2Socket1SP
+	TYPEM2Socket2
+	TYPEM2Socket3
+	TYPEMXMTypeI
+	TYPEMXMTypeII
+	TYPEMXMTypeIIISTD
+	TYPEMXMTypeIIIHE
+	TYPEMXMTypeIV
+	TYPEMXM30TypeA
+	TYPEMXM30TypeB
+	TYPEPCIExpressGen2SFF8639
+	TYPEPCIExpressGen3SFF8639
+)
+
+const (
+	TypePC_98C20 = 160 + iota
 	TypePC_98C24
 	TypePC_98E
 	TypePC_98LocalBus
@@ -68,6 +84,22 @@ func (s Type) String() string {
 		"AGP 4X",
 		"PCI-X",
 		"AGP 8X",
+		"M.2 Socket 1-DP (Mechanical Key A)",
+		"M.2 Socket 1-SD (Mechanical Key E)",
+		"M.2 Socket 2 (Mechanical Key B)",
+		"M.2 Socket 3 (Mechanical Key M)",
+		"MXM Type I",
+		"MXM Type II",
+		"MXM Type III (standard connector)",
+		"MXM Type III (HE connector)",
+		"MXM Type IV",
+		"MXM 3.0 Type A",
+		"MXM 3.0 Type B",
+		"PCI Express Gen 2 SFF-8639",
+		"PCI Express Gen 3 SFF-8639",
+	}
+
+	typesExt := [...]string{
 		"PC-98/C20",
 		"PC-98/C24",
 		"PC-98/E",
@@ -92,7 +124,13 @@ func (s Type) String() string {
 		"PCI Express Gen 3 x8",
 		"PCI Express Gen 3 x16",
 	}
+
+	if int(s) >= 160 {
+		return typesExt[s-160]
+	}
+
 	return types[s-1]
+
 }
 
 type DataBusWidth byte
