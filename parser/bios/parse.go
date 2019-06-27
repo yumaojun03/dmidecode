@@ -4,16 +4,16 @@ import (
 	"dmidecode/smbios"
 )
 
-// Parse 解析
+// Parse 参考 https://www.dmtf.org/sites/default/files/standards/documents/DSP0134_3.1.1.pdf
 func Parse(s *smbios.Structure) (*Information, error) {
 	data := s.Formatted
 	sas := smbios.U16(data[0x02:0x04])
 
 	bi := &Information{
 		Header:                 s.Header,
-		Vendor:                 s.Strings[0],
-		BIOSVersion:            s.Strings[1],
-		ReleaseDate:            s.Strings[2],
+		Vendor:                 s.GetString(0x0),
+		BIOSVersion:            s.GetString(0x1),
+		ReleaseDate:            s.GetString(0x4),
 		StartingAddressSegment: sas,
 		RomSize:                RomSize(64 * (data[0x05] + 1)),
 		RuntimeSize:            RuntimeSize((uint(0x10000) - uint(sas)) << 4),

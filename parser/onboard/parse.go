@@ -9,7 +9,7 @@ func Parse(s *smbios.Structure) (*ExtendedInformation, error) {
 	data := s.Formatted
 
 	info := &ExtendedInformation{
-		ReferenceDesignation: s.GetString(0),
+		ReferenceDesignation: s.GetString(0x0),
 		DeviceType:           ExtendedInformationType(data[0x01] & 127),
 		DeviceStatus:         DeviceStatus(data[0x01] >> 7),
 		DeviceTypeInstance:   data[0x02],

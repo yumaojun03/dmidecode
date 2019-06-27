@@ -10,12 +10,12 @@ func Parse(s *smbios.Structure) (*Information, error) {
 
 	info := &Information{
 		Header:            s.Header,
-		Manufacturer:      s.GetString(0),
-		ProductName:       s.GetString(1),
-		Version:           s.GetString(2),
-		SerialNumber:      s.GetString(3),
-		AssetTag:          s.GetString(4),
-		LocationInChassis: s.GetString(5),
+		Manufacturer:      s.GetString(0x0),
+		ProductName:       s.GetString(0x1),
+		Version:           s.GetString(0x2),
+		SerialNumber:      s.GetString(0x3),
+		AssetTag:          s.GetString(0x4),
+		LocationInChassis: s.GetString(0x6),
 	}
 
 	if len(s.Formatted) >= 0x05 {

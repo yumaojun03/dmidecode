@@ -1,5 +1,7 @@
 package baseboard
 
+import "fmt"
+
 // FeatureFlags 主板功能标签
 type FeatureFlags byte
 
@@ -14,6 +16,7 @@ const (
 )
 
 func (f FeatureFlags) String() string {
+	fmt.Printf("xxx,%d", f)
 	features := [...]string{
 		"Board is a hosting board", /* 0 */
 		"Board requires at least one daughter board",

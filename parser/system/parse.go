@@ -13,14 +13,14 @@ func Parse(s *smbios.Structure) (*Information, error) {
 
 	return &Information{
 		Header:       s.Header,
-		Manufacturer: s.GetString(0),
-		ProductName:  s.GetString(1),
-		Version:      s.GetString(2),
-		SerialNumber: s.GetString(3),
+		Manufacturer: s.GetString(0x0),
+		ProductName:  s.GetString(0x1),
+		Version:      s.GetString(0x2),
+		SerialNumber: s.GetString(0x3),
 		UUID:         uuid(data[0x04:0x14], s.GetString(2)),
 		WakeUpType:   WakeUpType(data[0x14]),
-		SKUNumber:    s.GetString(4),
-		Family:       s.GetString(5),
+		SKUNumber:    s.GetString(0xf),
+		Family:       s.GetString(0x16),
 	}, nil
 }
 

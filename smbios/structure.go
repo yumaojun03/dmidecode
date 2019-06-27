@@ -20,6 +20,8 @@ type Structure struct {
 	Header    Header
 	Formatted []byte
 	Strings   []string
+
+	formattedCount *int
 }
 
 // ReadStructures 读取smbios结构数据
@@ -70,12 +72,28 @@ func convertNative(ss []*smbios.Structure) []*Structure {
 }
 
 // GetString todo
-func (s *Structure) GetString(index int) string {
-	if index > len(s.Strings)-1 {
-		return ""
+func (s *Structure) GetString(offset int) string {
+	if offset > s.FormattedCount()-1 {
+		return "Unknown"
 	}
 
-	return s.Strings[index]
+	index := s.Formatted[offset]
+
+	if index == 0 {
+		return "Unknown"
+	}
+
+	return s.Strings[index-1]
+}
+
+// FormattedCount 格式化数据队列长度, 避免索引出界
+func (s *Structure) FormattedCount() int {
+	if s.formattedCount == nil {
+		c := len(s.Formatted)
+		s.formattedCount = &c
+	}
+
+	return *s.formattedCount
 }
 
 // U16 bytes to uint16

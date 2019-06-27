@@ -8,13 +8,13 @@ import (
 func ParseProcessor(s *smbios.Structure) (*Processor, error) {
 	data := s.Formatted
 	p := &Processor{
-		SocketDesignation: s.GetString(0),
+		SocketDesignation: s.GetString(0x0),
 		ProcessorType:     ProcessorType(data[0x01]),
 		Family:            ProcessorFamily(data[0x02]),
-		Manufacturer:      s.GetString(1),
+		Manufacturer:      s.GetString(0x3),
 		// TODO:
 		//pi.ProcessorID
-		Version:         s.GetString(2),
+		Version:         s.GetString(0x6),
 		Voltage:         ProcessorVoltage(data[0xD]),
 		ExternalClock:   smbios.U16(data[0xE:0x10]),
 		MaxSpeed:        smbios.U16(data[0x10:0x12]),
@@ -24,9 +24,9 @@ func ParseProcessor(s *smbios.Structure) (*Processor, error) {
 		L1CacheHandle:   smbios.U16(data[0x16:0x18]),
 		L2CacheHandle:   smbios.U16(data[0x18:0x1E]),
 		L3CacheHandle:   smbios.U16(data[0x1E:0x20]),
-		SerialNumber:    s.GetString(3),
-		AssetTag:        s.GetString(4),
-		PartNumber:      s.GetString(5),
+		SerialNumber:    s.GetString(0x1c),
+		AssetTag:        s.GetString(0x1d),
+		PartNumber:      s.GetString(0x1e),
 		CoreCount:       data[0x1F],
 		CoreEnabled:     data[0x20],
 		ThreadCount:     data[0x21],
@@ -42,7 +42,7 @@ func ParseCache(s *smbios.Structure) (*Cache, error) {
 	data := s.Formatted
 
 	cache := &Cache{
-		SocketDesignation:   s.GetString(0),
+		SocketDesignation:   s.GetString(0x0),
 		Configuration:       NewCacheConfiguration(smbios.U16(data[0x01:0x03])),
 		MaximumCacheSize:    NewCacheSize(smbios.U16(data[0x03:0x05])),
 		InstalledSize:       NewCacheSize(smbios.U16(data[0x05:0x07])),

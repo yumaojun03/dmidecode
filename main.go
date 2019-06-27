@@ -8,6 +8,7 @@ import (
 	"dmidecode/parser/onboard"
 	"dmidecode/parser/processor"
 	"dmidecode/parser/slot"
+	"dmidecode/parser/system"
 	"dmidecode/smbios"
 	"fmt"
 )
@@ -23,6 +24,15 @@ func main() {
 		case smbios.BIOS:
 			fmt.Println(s)
 			info, err := bios.Parse(s)
+			if err != nil {
+				panic(err)
+			}
+
+			fmt.Println(info)
+
+		case smbios.System:
+			fmt.Println(s)
+			info, err := system.Parse(s)
 			if err != nil {
 				panic(err)
 			}
