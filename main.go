@@ -6,10 +6,12 @@ import (
 	"dmidecode/parser/chassis"
 	"dmidecode/parser/memory"
 	"dmidecode/parser/onboard"
+	"dmidecode/parser/port"
 	"dmidecode/parser/processor"
 	"dmidecode/parser/slot"
 	"dmidecode/parser/system"
 	"dmidecode/smbios"
+
 	"fmt"
 )
 
@@ -60,6 +62,15 @@ func main() {
 		case smbios.OnBoardDevicesExtendedInformation:
 			fmt.Println(s)
 			info, err := onboard.Parse(s)
+			if err != nil {
+				panic(err)
+			}
+
+			fmt.Println(info)
+
+		case smbios.PortConnector:
+			fmt.Println(s)
+			info, err := port.Parse(s)
 			if err != nil {
 				panic(err)
 			}
