@@ -5,8 +5,8 @@ import (
 
 	"github.com/stretchr/testify/assert"
 
-	"dmidecode/parser/chassis"
-	"dmidecode/smbios"
+	"github.com/yumaojun03/dmidecode/parser/chassis"
+	"github.com/yumaojun03/dmidecode/smbios"
 )
 
 var (

@@ -1,8 +1,9 @@
 package slot
 
 import (
-	"dmidecode/smbios"
 	"fmt"
+
+	"github.com/yumaojun03/dmidecode/smbios"
 )
 
 // SystemSlot todo

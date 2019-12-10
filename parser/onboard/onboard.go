@@ -3,7 +3,7 @@ package onboard
 import (
 	"fmt"
 
-	"dmidecode/smbios"
+	"github.com/yumaojun03/dmidecode/smbios"
 )
 
 // ExtendedInformation 扩展设备信息

@@ -1,7 +1,7 @@
 package chassis
 
 import (
-	"dmidecode/smbios"
+	"github.com/yumaojun03/dmidecode/smbios"
 )
 
 // Parse 解析底座信息

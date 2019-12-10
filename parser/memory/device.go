@@ -1,8 +1,9 @@
 package memory
 
 import (
-	"dmidecode/smbios"
 	"fmt"
+
+	"github.com/yumaojun03/dmidecode/smbios"
 )
 
 // MemoryDevice 内存设备

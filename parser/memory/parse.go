@@ -1,8 +1,9 @@
 package memory
 
 import (
-	"dmidecode/smbios"
 	"fmt"
+
+	"github.com/yumaojun03/dmidecode/smbios"
 )
 
 // ParseMemoryDevice 解析

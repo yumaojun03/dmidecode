@@ -1,7 +1,7 @@
 package processor
 
 import (
-	"dmidecode/smbios"
+	"github.com/yumaojun03/dmidecode/smbios"
 )
 
 // ParseProcessor 处理器

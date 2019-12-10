@@ -3,7 +3,7 @@ package system
 import (
 	"fmt"
 
-	"dmidecode/smbios"
+	"github.com/yumaojun03/dmidecode/smbios"
 )
 
 // Information 系统信息

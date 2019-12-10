@@ -1,15 +1,17 @@
 package main
 
 import (
-	"dmidecode/parser/baseboard"
-	"dmidecode/parser/bios"
-	"dmidecode/parser/chassis"
-	"dmidecode/parser/memory"
-	"dmidecode/parser/onboard"
-	"dmidecode/parser/processor"
-	"dmidecode/parser/slot"
-	"dmidecode/parser/system"
-	"dmidecode/smbios"
+	"github.com/yumaojun03/dmidecode/parser/baseboard"
+	"github.com/yumaojun03/dmidecode/parser/bios"
+	"github.com/yumaojun03/dmidecode/parser/chassis"
+	"github.com/yumaojun03/dmidecode/parser/memory"
+	"github.com/yumaojun03/dmidecode/parser/onboard"
+	"github.com/yumaojun03/dmidecode/parser/port"
+	"github.com/yumaojun03/dmidecode/parser/processor"
+	"github.com/yumaojun03/dmidecode/parser/slot"
+	"github.com/yumaojun03/dmidecode/parser/system"
+	"github.com/yumaojun03/dmidecode/smbios"
+
 	"fmt"
 )
 
@@ -60,6 +62,15 @@ func main() {
 		case smbios.OnBoardDevicesExtendedInformation:
 			fmt.Println(s)
 			info, err := onboard.Parse(s)
+			if err != nil {
+				panic(err)
+			}
+
+			fmt.Println(info)
+
+		case smbios.PortConnector:
+			fmt.Println(s)
+			info, err := port.Parse(s)
 			if err != nil {
 				panic(err)
 			}

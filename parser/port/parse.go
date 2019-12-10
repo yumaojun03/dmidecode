@@ -1,7 +1,7 @@
 package port
 
 import (
-	"dmidecode/smbios"
+	"github.com/yumaojun03/dmidecode/smbios"
 )
 
 // Parse 解析port信息
@@ -9,9 +9,9 @@ func Parse(s *smbios.Structure) (*Information, error) {
 	data := s.Formatted
 	info := &Information{
 		Header:                      s.Header,
-		InternalReferenceDesignator: s.GetString(0),
+		InternalReferenceDesignator: s.GetString(0x0),
 		InternalConnectorType:       ConnectorType(data[0x01]),
-		ExternalReferenceDesignator: s.GetString(1),
+		ExternalReferenceDesignator: s.GetString(0x2),
 		ExternalConnectorType:       ConnectorType(data[0x03]),
 		Type:                        PortType(data[0x04]),
 	}

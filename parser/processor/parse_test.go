@@ -1,9 +1,10 @@
 package processor_test
 
 import (
-	"dmidecode/parser/processor"
-	"dmidecode/smbios"
 	"testing"
+
+	"github.com/yumaojun03/dmidecode/parser/processor"
+	"github.com/yumaojun03/dmidecode/smbios"
 
 	"github.com/stretchr/testify/assert"
 )

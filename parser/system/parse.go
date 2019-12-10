@@ -4,7 +4,7 @@ import (
 	"bytes"
 	"fmt"
 
-	"dmidecode/smbios"
+	"github.com/yumaojun03/dmidecode/smbios"
 )
 
 // Parse 解析smbios struct数据

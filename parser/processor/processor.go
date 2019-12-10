@@ -1,8 +1,9 @@
 package processor
 
 import (
-	"dmidecode/smbios"
 	"fmt"
+
+	"github.com/yumaojun03/dmidecode/smbios"
 )
 
 // Processor CPU信息
