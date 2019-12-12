@@ -9,14 +9,14 @@ import (
 // Information 系统信息
 type Information struct {
 	smbios.Header
-	Manufacturer string
-	ProductName  string
-	Version      string
-	SerialNumber string
-	UUID         string
-	WakeUpType   WakeUpType
-	SKUNumber    string
-	Family       string
+	Manufacturer string     `json:"manufacturer,omitempty"`
+	ProductName  string     `json:"product_name,omitempty"`
+	Version      string     `json:"version,omitempty"`
+	SerialNumber string     `json:"serial_number,omitempty"`
+	UUID         string     `json:"uuid,omitempty"`
+	WakeUpType   WakeUpType `json:"wake_up_type,omitempty"`
+	SKUNumber    string     `json:"sku_number,omitempty"`
+	Family       string     `json:"family,omitempty"`
 }
 
 func (s Information) String() string {

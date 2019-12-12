@@ -9,11 +9,11 @@ import (
 // Information port信息
 type Information struct {
 	smbios.Header
-	InternalReferenceDesignator string
-	InternalConnectorType       ConnectorType
-	ExternalReferenceDesignator string
-	ExternalConnectorType       ConnectorType
-	Type                        PortType
+	InternalReferenceDesignator string        `json:"internal_reference_designator,omitempty"`
+	InternalConnectorType       ConnectorType `json:"internal_connector_type,omitempty"`
+	ExternalReferenceDesignator string        `json:"external_reference_designator,omitempty"`
+	ExternalConnectorType       ConnectorType `json:"external_connector_type,omitempty"`
+	Type                        PortType      `json:"type,omitempty"`
 }
 
 func (p Information) String() string {

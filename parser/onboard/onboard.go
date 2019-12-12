@@ -9,13 +9,13 @@ import (
 // ExtendedInformation 扩展设备信息
 type ExtendedInformation struct {
 	smbios.Header
-	ReferenceDesignation string
-	DeviceType           ExtendedInformationType
-	DeviceStatus         DeviceStatus
-	DeviceTypeInstance   byte
-	SegmentGroupNumber   uint16
-	BusNumber            byte
-	DeviceFunctionNumber byte
+	ReferenceDesignation string                  `json:"reference_designation,omitempty"`
+	DeviceType           ExtendedInformationType `json:"device_type,omitempty"`
+	DeviceStatus         DeviceStatus            `json:"device_status,omitempty"`
+	DeviceTypeInstance   byte                    `json:"device_type_instance,omitempty"`
+	SegmentGroupNumber   uint16                  `json:"segment_group_number,omitempty"`
+	BusNumber            byte                    `json:"bus_number,omitempty"`
+	DeviceFunctionNumber byte                    `json:"device_function_number,omitempty"`
 }
 
 // SlotSegment 主板设备对应的slot

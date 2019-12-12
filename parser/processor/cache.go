@@ -8,16 +8,16 @@ import (
 
 type Cache struct {
 	smbios.Header
-	SocketDesignation   string
-	Configuration       CacheConfiguration
-	MaximumCacheSize    CacheSize
-	InstalledSize       CacheSize
-	SupportedSRAMType   CacheSRAMType
-	CurrentSRAMType     CacheSRAMType
-	CacheSpeed          CacheSpeed
-	ErrorCorrectionType CacheErrorCorrectionType
-	SystemCacheType     CacheSystemCacheType
-	Associativity       CacheAssociativity
+	SocketDesignation   string                   `json:"socket_designation,omitempty"`
+	Configuration       CacheConfiguration       `json:"configuration,omitempty"`
+	MaximumCacheSize    CacheSize                `json:"maximum_cache_size,omitempty"`
+	InstalledSize       CacheSize                `json:"installed_size,omitempty"`
+	SupportedSRAMType   CacheSRAMType            `json:"supported_sram_type,omitempty"`
+	CurrentSRAMType     CacheSRAMType            `json:"current_sram_type,omitempty"`
+	CacheSpeed          CacheSpeed               `json:"cache_speed,omitempty"`
+	ErrorCorrectionType CacheErrorCorrectionType `json:"error_correction_type,omitempty"`
+	SystemCacheType     CacheSystemCacheType     `json:"system_cache_type,omitempty"`
+	Associativity       CacheAssociativity       `json:"associativity,omitempty"`
 }
 
 func (c Cache) String() string {

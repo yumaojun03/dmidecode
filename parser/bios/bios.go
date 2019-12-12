@@ -9,19 +9,19 @@ import (
 // Information bios信息
 type Information struct {
 	smbios.Header
-	Vendor                                 string
-	BIOSVersion                            string
-	StartingAddressSegment                 uint16
-	ReleaseDate                            string
-	RomSize                                RomSize
-	RuntimeSize                            RuntimeSize
-	Characteristics                        Characteristics
-	CharacteristicsExt1                    Ext1
-	CharacteristicsExt2                    Ext2
-	SystemBIOSMajorRelease                 byte
-	SystemBIOSMinorRelease                 byte
-	EmbeddedControllerFirmwareMajorRelease byte
-	EmbeddedControllerFirmawreMinorRelease byte
+	Vendor                                 string          `json:"vendor,omitempty"`
+	BIOSVersion                            string          `json:"bios_version,omitempty"`
+	StartingAddressSegment                 uint16          `json:"starting_address_segment,omitempty"`
+	ReleaseDate                            string          `json:"release_date,omitempty"`
+	RomSize                                RomSize         `json:"rom_size,omitempty"`
+	RuntimeSize                            RuntimeSize     `json:"runtime_size,omitempty"`
+	Characteristics                        Characteristics `json:"characteristics,omitempty"`
+	CharacteristicsExt1                    Ext1            `json:"characteristics_ext_1,omitempty"`
+	CharacteristicsExt2                    Ext2            `json:"characteristics_ext_2,omitempty"`
+	SystemBIOSMajorRelease                 byte            `json:"system_bios_major_release,omitempty"`
+	SystemBIOSMinorRelease                 byte            `json:"system_bios_minor_release,omitempty"`
+	EmbeddedControllerFirmwareMajorRelease byte            `json:"firmware_major_release,omitempty"`
+	EmbeddedControllerFirmawreMinorRelease byte            `json:"firmawre_minor_release,omitempty"`
 }
 
 func (b Information) String() string {

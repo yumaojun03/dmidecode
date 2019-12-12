@@ -9,29 +9,29 @@ import (
 // Processor CPU信息
 type Processor struct {
 	smbios.Header
-	SocketDesignation string
-	ProcessorType     ProcessorType
-	Family            ProcessorFamily
-	Manufacturer      string
-	ID                ProcessorID
-	Version           string
-	Voltage           ProcessorVoltage
-	ExternalClock     uint16
-	MaxSpeed          uint16
-	CurrentSpeed      uint16
-	Status            ProcessorStatus
-	Upgrade           ProcessorUpgrade
-	L1CacheHandle     uint16
-	L2CacheHandle     uint16
-	L3CacheHandle     uint16
-	SerialNumber      string
-	AssetTag          string
-	PartNumber        string
-	CoreCount         byte
-	CoreEnabled       byte
-	ThreadCount       byte
-	Characteristics   ProcessorCharacteristics
-	Family2           ProcessorFamily
+	SocketDesignation string                   `json:"socket_designation,omitempty"`
+	ProcessorType     ProcessorType            `json:"processor_type,omitempty"`
+	Family            ProcessorFamily          `json:"family,omitempty"`
+	Manufacturer      string                   `json:"manufacturer,omitempty"`
+	ID                ProcessorID              `json:"id,omitempty"`
+	Version           string                   `json:"version,omitempty"`
+	Voltage           ProcessorVoltage         `json:"voltage,omitempty"`
+	ExternalClock     uint16                   `json:"external_clock,omitempty"`
+	MaxSpeed          uint16                   `json:"max_speed,omitempty"`
+	CurrentSpeed      uint16                   `json:"current_speed,omitempty"`
+	Status            ProcessorStatus          `json:"status,omitempty"`
+	Upgrade           ProcessorUpgrade         `json:"upgrade,omitempty"`
+	L1CacheHandle     uint16                   `json:"l_1_cache_handle,omitempty"`
+	L2CacheHandle     uint16                   `json:"l_2_cache_handle,omitempty"`
+	L3CacheHandle     uint16                   `json:"l_3_cache_handle,omitempty"`
+	SerialNumber      string                   `json:"serial_number,omitempty"`
+	AssetTag          string                   `json:"asset_tag,omitempty"`
+	PartNumber        string                   `json:"part_number,omitempty"`
+	CoreCount         byte                     `json:"core_count,omitempty"`
+	CoreEnabled       byte                     `json:"core_enabled,omitempty"`
+	ThreadCount       byte                     `json:"thread_count,omitempty"`
+	Characteristics   ProcessorCharacteristics `json:"characteristics,omitempty"`
+	Family2           ProcessorFamily          `json:"family_2,omitempty"`
 }
 
 func (p Processor) String() string {

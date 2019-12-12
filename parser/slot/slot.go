@@ -9,17 +9,17 @@ import (
 // SystemSlot todo
 type SystemSlot struct {
 	smbios.Header
-	Designation          string
-	Type                 Type
-	DataBusWidth         DataBusWidth
-	CurrentUsage         Usage
-	Length               Length
-	ID                   ID
-	Characteristics1     Characteristics1
-	Characteristics2     Characteristics2
-	SegmentGroupNumber   SegmengGroupNumber
-	BusNumber            Number
-	DeviceFunctionNumber Number
+	Designation          string             `json:"designation,omitempty"`
+	Type                 Type               `json:"type,omitempty"`
+	DataBusWidth         DataBusWidth       `json:"data_bus_width,omitempty"`
+	CurrentUsage         Usage              `json:"current_usage,omitempty"`
+	Length               Length             `json:"length,omitempty"`
+	ID                   ID                 `json:"id,omitempty"`
+	Characteristics1     Characteristics1   `json:"characteristics_1,omitempty"`
+	Characteristics2     Characteristics2   `json:"characteristics_2,omitempty"`
+	SegmentGroupNumber   SegmengGroupNumber `json:"segment_group_number,omitempty"`
+	BusNumber            Number             `json:"bus_number,omitempty"`
+	DeviceFunctionNumber Number             `json:"device_function_number,omitempty"`
 }
 
 func (s SystemSlot) String() string {

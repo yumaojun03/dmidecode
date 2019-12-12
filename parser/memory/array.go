@@ -9,13 +9,13 @@ import (
 // PhysicalMemoryArray todo
 type PhysicalMemoryArray struct {
 	smbios.Header
-	Location                PhysicalMemoryArrayLocation
-	Use                     PhysicalMemoryArrayUse
-	ErrorCorrection         PhysicalMemoryArrayErrorCorrection
-	MaximumCapacity         uint32
-	ErrorInformationHandle  uint16
-	NumberOfMemoryDevices   uint16
-	ExtendedMaximumCapacity uint64
+	Location                PhysicalMemoryArrayLocation        `json:"location,omitempty"`
+	Use                     PhysicalMemoryArrayUse             `json:"use,omitempty"`
+	ErrorCorrection         PhysicalMemoryArrayErrorCorrection `json:"error_correction,omitempty"`
+	MaximumCapacity         uint32                             `json:"maximum_capacity,omitempty"`
+	ErrorInformationHandle  uint16                             `json:"error_information_handle,omitempty"`
+	NumberOfMemoryDevices   uint16                             `json:"number_of_memory_devices,omitempty"`
+	ExtendedMaximumCapacity uint64                             `json:"extended_maximum_capacity,omitempty"`
 }
 
 func (p PhysicalMemoryArray) String() string {
