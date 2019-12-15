@@ -21,6 +21,7 @@ func New() (*Decoder, error) {
 	}
 
 	d := new(Decoder)
+	d.total = len(ss)
 
 	for i := range ss {
 		switch smbios.StructureType(ss[i].Header.Type) {
@@ -55,6 +56,8 @@ func New() (*Decoder, error) {
 
 // Decoder decoder
 type Decoder struct {
+	total int
+
 	bios                []*smbios.Structure
 	system              []*smbios.Structure
 	baseBoard           []*smbios.Structure
@@ -220,4 +223,24 @@ func (d *Decoder) Slot() ([]*slot.SystemSlot, error) {
 	}
 
 	return infos, nil
+}
+
+// ALL decode all
+func (d *Decoder) ALL() (*InformationSet, error) {
+	errs := NewErrorSet()
+	sets := NewInformationSet()
+
+	biosInfos, err := d.BIOS()
+	errs.checkOrAdd(err)
+	sets.addBios(biosInfos)
+
+	systemInfos, err := d.System()
+	errs.checkOrAdd(err)
+	sets.addSystem(systemInfos)
+
+	bbInfos, err := d.BaseBoard()
+	errs.checkOrAdd(err)
+	sets.addBaseBoard(bbInfos)
+
+	return sets, errs.Error()
 }
