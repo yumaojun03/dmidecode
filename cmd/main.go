@@ -1,7 +1,6 @@
 package main
 
 import (
-	"errors"
 	"flag"
 	"fmt"
 	"os"
@@ -27,6 +26,11 @@ func main() {
 	decoder = dmi
 
 	flag.Parse()
+
+	if h {
+		usage()
+		os.Exit(0)
+	}
 
 	switch t {
 	case "":
@@ -98,14 +102,15 @@ func main() {
 			fmt.Println(infos[i])
 		}
 	default:
-		checkDecodeErr(t, errors.New("unknown decode type"))
+		fmt.Printf("ERR: unknown decode type %s\n", t)
 		usage()
+		os.Exit(1)
 	}
 }
 
 func checkDecodeErr(t string, err error) {
 	if err != nil {
-		fmt.Fprintf(os.Stderr, "decode %s error, %s", t, err)
+		fmt.Fprintf(os.Stderr, "ERR: decode %s error, %s", t, err)
 		os.Exit(1)
 	}
 }
