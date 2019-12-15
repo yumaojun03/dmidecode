@@ -1,6 +1,7 @@
 package main
 
 import (
+	"errors"
 	"flag"
 	"fmt"
 	"os"
@@ -96,6 +97,9 @@ func main() {
 		for i := range infos {
 			fmt.Println(infos[i])
 		}
+	default:
+		checkDecodeErr(t, errors.New("unknown decode type"))
+		usage()
 	}
 }
 
@@ -117,6 +121,6 @@ Options:
 
 func init() {
 	flag.BoolVar(&h, "h", false, "this help")
-	flag.StringVar(&t, "t", "", "dmidocode type [bios, system, baseboard, chassis, onboard, port, processor, memory, slot")
+	flag.StringVar(&t, "t", "", "dmidocode type [bios, system, baseboard, chassis, onboard, port, processor, memory, slot]")
 	flag.Usage = usage
 }
