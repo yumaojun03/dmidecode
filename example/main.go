@@ -19,6 +19,7 @@ func main() {
 	checkError(err)
 
 	infos, err := dmi.BIOS()
+	dmi.ALL()
 	checkError(err)
 
 	for i := range infos {
