@@ -1,7 +1,8 @@
 # dmidecode
 
 纯Golang实现的dmidecode, 零依赖, 支持Linux, Unix, Windows
-功能和命令行的dmidecode工具一样
+
+功能和命令行的dmidecode工具一样, 使用方式参考: [example](./example/main.go)
 
 
 ## 安装方式
@@ -51,5 +52,9 @@ func main() {
 		fmt.Println(infos[i])
 	}
 }
+```
 
+## CLI 使用
+``` sh
+$ go run cmd/main.go -t [bios, system, baseboard, chassis, onboard, port, processor, memory, slot]
 ```
