@@ -242,5 +242,37 @@ func (d *Decoder) ALL() (*InformationSet, error) {
 	errs.checkOrAdd(err)
 	sets.addBaseBoard(bbInfos)
 
+	csInfos, err := d.Chassis()
+	errs.checkOrAdd(err)
+	sets.addChassis(csInfos)
+
+	obInfos, err := d.Onboard()
+	errs.checkOrAdd(err)
+	sets.addOnboard(obInfos)
+
+	pcInfos, err := d.PortConnector()
+	errs.checkOrAdd(err)
+	sets.addPortConnector(pcInfos)
+
+	processorInfos, err := d.Processor()
+	errs.checkOrAdd(err)
+	sets.addProcessor(processorInfos)
+
+	pcacheInfos, err := d.ProcessorCache()
+	errs.checkOrAdd(err)
+	sets.addCache(pcacheInfos)
+
+	maInfos, err := d.MemoryArray()
+	errs.checkOrAdd(err)
+	sets.addMemoryArray(maInfos)
+
+	mdInfos, err := d.MemoryDevice()
+	errs.checkOrAdd(err)
+	sets.addMemoryDevice(mdInfos)
+
+	slotsInfos, err := d.Slot()
+	errs.checkOrAdd(err)
+	sets.addSlot(slotsInfos)
+
 	return sets, errs.Error()
 }

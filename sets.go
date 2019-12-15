@@ -2,6 +2,7 @@ package dmidecode
 
 import (
 	"errors"
+	"fmt"
 	"strings"
 
 	"github.com/yumaojun03/dmidecode/parser/baseboard"
@@ -47,6 +48,43 @@ type InformationSet struct {
 	slot         []*slot.SystemSlot
 }
 
+// Print 打印所有
+func (s *InformationSet) Print() {
+	for i := range s.bios {
+		fmt.Println(s.bios[i])
+	}
+	for i := range s.system {
+		fmt.Println(s.system[i])
+	}
+	for i := range s.baseboard {
+		fmt.Println(s.baseboard[i])
+	}
+	for i := range s.chassis {
+		fmt.Println(s.chassis[i])
+	}
+	for i := range s.onboard {
+		fmt.Println(s.onboard[i])
+	}
+	for i := range s.portConnetor {
+		fmt.Println(s.portConnetor[i])
+	}
+	for i := range s.processor {
+		fmt.Println(s.processor[i])
+	}
+	for i := range s.cache {
+		fmt.Println(s.cache[i])
+	}
+	for i := range s.memoryArray {
+		fmt.Println(s.memoryArray[i])
+	}
+	for i := range s.memoryDevice {
+		fmt.Println(s.memoryDevice[i])
+	}
+	for i := range s.slot {
+		fmt.Println(s.slot[i])
+	}
+}
+
 func (s *InformationSet) addBios(infos []*bios.Information) {
 	s.bios = infos
 }
@@ -57,6 +95,38 @@ func (s *InformationSet) addSystem(infos []*system.Information) {
 
 func (s *InformationSet) addBaseBoard(infos []*baseboard.Information) {
 	s.baseboard = infos
+}
+
+func (s *InformationSet) addChassis(infos []*chassis.Information) {
+	s.chassis = infos
+}
+
+func (s *InformationSet) addOnboard(infos []*onboard.ExtendedInformation) {
+	s.onboard = infos
+}
+
+func (s *InformationSet) addPortConnector(infos []*port.Information) {
+	s.portConnetor = infos
+}
+
+func (s *InformationSet) addProcessor(infos []*processor.Processor) {
+	s.processor = infos
+}
+
+func (s *InformationSet) addCache(infos []*processor.Cache) {
+	s.cache = infos
+}
+
+func (s *InformationSet) addMemoryArray(infos []*memory.PhysicalMemoryArray) {
+	s.memoryArray = infos
+}
+
+func (s *InformationSet) addMemoryDevice(infos []*memory.MemoryDevice) {
+	s.memoryDevice = infos
+}
+
+func (s *InformationSet) addSlot(infos []*slot.SystemSlot) {
+	s.slot = infos
 }
 
 // NewErrorSet todo
