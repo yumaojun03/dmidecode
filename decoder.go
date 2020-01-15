@@ -103,7 +103,7 @@ func (d *Decoder) System() ([]*system.Information, error) {
 func (d *Decoder) BaseBoard() ([]*baseboard.Information, error) {
 	infos := make([]*baseboard.Information, 0, len(d.baseBoard))
 	for i := range d.baseBoard {
-		info, err := baseboard.Parse(d.system[i])
+		info, err := baseboard.Parse(d.baseBoard[i])
 		if err != nil {
 			return nil, err
 		}
