@@ -1,7 +1,7 @@
 MAIN_FILE := "cmd/main.go"
 PROJECT_NAME := "dmidecode"
 PKG := "github.com/yumaojun03/$(PROJECT_NAME)"
-PKG_LIST := $(shell go list ${PKG}/... | grep -v /vendor/)
+PKG_LIST := $(shell go list ${PKG}/... | grep -v /vendor/ | grep -v smbios)
 GO_FILES := $(shell find . -name '*.go' | grep -v /vendor/ | grep -v _test.go)
 
 .PHONY: all dep lint vet test test-coverage build clean
