@@ -18,8 +18,10 @@ func main() {
 	dmi, err := dmidecode.New()
 	checkError(err)
 
+	// 获取所有信息
+	// infos, err := dmi.ALL()
+	// 获取BIOS信息
 	infos, err := dmi.BIOS()
-	dmi.ALL()
 	checkError(err)
 
 	for i := range infos {

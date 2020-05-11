@@ -11,6 +11,11 @@
 # Output of the go coverage tool, specifically when used with LiteIDE
 *.out
 
+vendor
+build
+coverage.txt
+.idea
+
 dmidecode
 go-dmidecode
 dmidecode-go
