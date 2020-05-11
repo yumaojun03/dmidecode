@@ -1,4 +1,5 @@
 # dmidecode
+![Build and Test](https://github.com/yumaojun03/dmidecode/workflows/Build%20and%20Test/badge.svg)
 [![Go Report Card](https://goreportcard.com/badge/github.com/yumaojun03/dmidecode)](https://goreportcard.com/report/github.com/yumaojun03/dmidecode)
 [![Release](https://img.shields.io/github/release/yumaojun03/dmidecode.svg?style=flat-square)](https://github.com/yumaojun03/dmidecode/releases)
 [![MIT License](https://img.shields.io/github/license/yumaojun03/dmidecode.svg)](https://github.com/yumaojun03/dmidecode/blob/master/LICENSE)
