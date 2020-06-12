@@ -67,6 +67,12 @@ func main() {
 		for i := range infos {
 			fmt.Println(infos[i])
 		}
+
+		einfos, err := decoder.OnboardExtended()
+		checkDecodeErr(t, err)
+		for i := range einfos {
+			fmt.Println(einfos[i])
+		}
 	case "port":
 		infos, err := decoder.PortConnector()
 		checkDecodeErr(t, err)

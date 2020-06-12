@@ -24,6 +24,11 @@ type Structure struct {
 	formattedCount *int
 }
 
+// Type 协议Header
+func (s *Structure) Type() uint8 {
+	return s.Header.Type
+}
+
 // ReadStructures 读取smbios结构数据
 func ReadStructures() ([]*Structure, error) {
 	// Find SMBIOS data in operating system-specific location.
@@ -76,7 +81,6 @@ func (s *Structure) GetString(offset int) string {
 	if offset > s.FormattedCount()-1 {
 		return "Unknown"
 	}
-
 	index := s.Formatted[offset]
 
 	if index == 0 {

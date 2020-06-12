@@ -19,33 +19,35 @@ import (
 // NewInformationSet todo
 func NewInformationSet() *InformationSet {
 	return &InformationSet{
-		bios:         []*bios.Information{},
-		system:       []*system.Information{},
-		baseboard:    []*baseboard.Information{},
-		chassis:      []*chassis.Information{},
-		onboard:      []*onboard.ExtendedInformation{},
-		portConnetor: []*port.Information{},
-		processor:    []*processor.Processor{},
-		cache:        []*processor.Cache{},
-		memoryArray:  []*memory.PhysicalMemoryArray{},
-		memoryDevice: []*memory.MemoryDevice{},
-		slot:         []*slot.SystemSlot{},
+		bios:            []*bios.Information{},
+		system:          []*system.Information{},
+		baseboard:       []*baseboard.Information{},
+		chassis:         []*chassis.Information{},
+		onboard:         []*onboard.Information{},
+		onboardExtended: []*onboard.ExtendedInformation{},
+		portConnetor:    []*port.Information{},
+		processor:       []*processor.Processor{},
+		cache:           []*processor.Cache{},
+		memoryArray:     []*memory.PhysicalMemoryArray{},
+		memoryDevice:    []*memory.MemoryDevice{},
+		slot:            []*slot.SystemSlot{},
 	}
 }
 
 // InformationSet 集合
 type InformationSet struct {
-	bios         []*bios.Information
-	system       []*system.Information
-	baseboard    []*baseboard.Information
-	chassis      []*chassis.Information
-	onboard      []*onboard.ExtendedInformation
-	portConnetor []*port.Information
-	processor    []*processor.Processor
-	cache        []*processor.Cache
-	memoryArray  []*memory.PhysicalMemoryArray
-	memoryDevice []*memory.MemoryDevice
-	slot         []*slot.SystemSlot
+	bios            []*bios.Information
+	system          []*system.Information
+	baseboard       []*baseboard.Information
+	chassis         []*chassis.Information
+	onboard         []*onboard.Information
+	onboardExtended []*onboard.ExtendedInformation
+	portConnetor    []*port.Information
+	processor       []*processor.Processor
+	cache           []*processor.Cache
+	memoryArray     []*memory.PhysicalMemoryArray
+	memoryDevice    []*memory.MemoryDevice
+	slot            []*slot.SystemSlot
 }
 
 // Print 打印所有
@@ -64,6 +66,9 @@ func (s *InformationSet) Print() {
 	}
 	for i := range s.onboard {
 		fmt.Println(s.onboard[i])
+	}
+	for i := range s.onboardExtended {
+		fmt.Println(s.onboardExtended[i])
 	}
 	for i := range s.portConnetor {
 		fmt.Println(s.portConnetor[i])
@@ -102,7 +107,7 @@ func (s *InformationSet) addChassis(infos []*chassis.Information) {
 }
 
 func (s *InformationSet) addOnboard(infos []*onboard.ExtendedInformation) {
-	s.onboard = infos
+	s.onboardExtended = infos
 }
 
 func (s *InformationSet) addPortConnector(infos []*port.Information) {

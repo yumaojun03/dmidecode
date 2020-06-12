@@ -2,11 +2,46 @@ package onboard
 
 import (
 	"fmt"
+	"strings"
 
 	"github.com/yumaojun03/dmidecode/smbios"
 )
 
-// ExtendedInformation 扩展设备信息
+// Information 设备信息 (smbios < 2.6)
+// 参考: https://www.dmtf.org/sites/default/files/standards/documents/DSP0134_3.1.1.pdf
+//      7.11 On Board Devices Information (Type 10, Obsolete)
+type Information struct {
+	smbios.Header
+	Devices []Device `json:"devices,omitempty"`
+}
+
+// Device 设备
+type Device struct {
+	Description  string                  `json:"description,omitempty"`
+	DeviceStatus DeviceStatus            `json:"device_status,omitempty"`
+	DeviceType   ExtendedInformationType `json:"device_type,omitempty"`
+}
+
+func (i Information) String() string {
+	str := []string{}
+	for index, d := range i.Devices {
+		deviceStr := fmt.Sprintf("On Board Device %d Information\n"+
+			"\tDevice Type: %s\n"+
+			"\tDevice Status: %s\n"+
+			"\tDescription: %s\n",
+			index+1,
+			d.DeviceType,
+			d.DeviceStatus,
+			d.Description)
+		str = append(str, deviceStr)
+	}
+
+	return strings.Join(str, "")
+}
+
+// ExtendedInformation 扩展设备信息 (smbios >= 2.6)
+// 参考文档: https://www.dmtf.org/sites/default/files/standards/documents/DSP0134_3.1.1.pdf
+// 7.42 Onboard Devices Extended Information (Type 41)
 type ExtendedInformation struct {
 	smbios.Header
 	ReferenceDesignation string                  `json:"reference_designation,omitempty"`

@@ -33,8 +33,10 @@ func New() (*Decoder, error) {
 			d.baseBoard = append(d.baseBoard, ss[i])
 		case smbios.Chassis:
 			d.chassis = append(d.chassis, ss[i])
-		case smbios.OnBoardDevicesExtendedInformation:
+		case smbios.OnBoardDevices:
 			d.onBoardDevices = append(d.onBoardDevices, ss[i])
+		case smbios.OnBoardDevicesExtendedInformation:
+			d.onBoardExtendedDevices = append(d.onBoardExtendedDevices, ss[i])
 		case smbios.PortConnector:
 			d.portConnector = append(d.portConnector, ss[i])
 		case smbios.Processor:
@@ -58,17 +60,18 @@ func New() (*Decoder, error) {
 type Decoder struct {
 	total int
 
-	bios                []*smbios.Structure
-	system              []*smbios.Structure
-	baseBoard           []*smbios.Structure
-	chassis             []*smbios.Structure
-	onBoardDevices      []*smbios.Structure
-	portConnector       []*smbios.Structure
-	processor           []*smbios.Structure
-	cache               []*smbios.Structure
-	physicalMemoryArray []*smbios.Structure
-	memoryDevice        []*smbios.Structure
-	systemSlots         []*smbios.Structure
+	bios                   []*smbios.Structure
+	system                 []*smbios.Structure
+	baseBoard              []*smbios.Structure
+	chassis                []*smbios.Structure
+	onBoardDevices         []*smbios.Structure
+	onBoardExtendedDevices []*smbios.Structure
+	portConnector          []*smbios.Structure
+	processor              []*smbios.Structure
+	cache                  []*smbios.Structure
+	physicalMemoryArray    []*smbios.Structure
+	memoryDevice           []*smbios.Structure
+	systemSlots            []*smbios.Structure
 }
 
 // BIOS 解析bios信息
@@ -127,11 +130,25 @@ func (d *Decoder) Chassis() ([]*chassis.Information, error) {
 	return infos, nil
 }
 
+// OnboardExtended 解析onboard信息
+func (d *Decoder) OnboardExtended() ([]*onboard.ExtendedInformation, error) {
+	infos := make([]*onboard.ExtendedInformation, 0, len(d.onBoardExtendedDevices))
+	for i := range d.onBoardExtendedDevices {
+		info, err := onboard.ParseType41(d.onBoardExtendedDevices[i])
+		if err != nil {
+			return nil, err
+		}
+		infos = append(infos, info)
+	}
+
+	return infos, nil
+}
+
 // Onboard 解析onboard信息
-func (d *Decoder) Onboard() ([]*onboard.ExtendedInformation, error) {
-	infos := make([]*onboard.ExtendedInformation, 0, len(d.onBoardDevices))
+func (d *Decoder) Onboard() ([]*onboard.Information, error) {
+	infos := make([]*onboard.Information, 0, len(d.onBoardDevices))
 	for i := range d.onBoardDevices {
-		info, err := onboard.Parse(d.onBoardDevices[i])
+		info, err := onboard.ParseType10(d.onBoardDevices[i])
 		if err != nil {
 			return nil, err
 		}
@@ -246,7 +263,7 @@ func (d *Decoder) ALL() (*InformationSet, error) {
 	errs.checkOrAdd(err)
 	sets.addChassis(csInfos)
 
-	obInfos, err := d.Onboard()
+	obInfos, err := d.OnboardExtended()
 	errs.checkOrAdd(err)
 	sets.addOnboard(obInfos)
 
