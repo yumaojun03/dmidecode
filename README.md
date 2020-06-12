@@ -61,5 +61,5 @@ func main() {
 
 ## CLI 使用
 ``` sh
-$ go run cmd/main.go -t [bios, system, baseboard, chassis, onboard, port, processor, memory, slot]
+$ go run cmd/main.go -d -t [bios, system, baseboard, chassis, onboard, port, processor, memory, slot]
 ```
