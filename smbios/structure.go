@@ -15,6 +15,11 @@ type Header struct {
 	Handle uint16
 }
 
+func (h *Header) String() string {
+	return fmt.Sprintf("Type: %d, Length: %d, Handle: %d",
+		h.Type, h.Length, h.Handle)
+}
+
 // A Structure is an SMBIOS structure.
 type Structure struct {
 	Header    Header
@@ -22,6 +27,21 @@ type Structure struct {
 	Strings   []string
 
 	formattedCount *int
+}
+
+// IsOverFlow 判断是否越界
+func (s *Structure) IsOverFlow(length int) bool {
+	return s.DataLength() >= length
+}
+
+// DataLength data长度
+func (s *Structure) DataLength() int {
+	return len(s.Formatted)
+}
+
+func (s *Structure) String() string {
+	return fmt.Sprintf("Header: %s, Data: %v Strings: %v",
+		s.Header.String(), s.Formatted, s.Strings)
 }
 
 // Type 协议Header

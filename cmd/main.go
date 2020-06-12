@@ -9,8 +9,9 @@ import (
 )
 
 var (
-	h bool
-	t string
+	debug bool
+	help  bool
+	t     string
 )
 
 var (
@@ -26,8 +27,9 @@ func main() {
 	decoder = dmi
 
 	flag.Parse()
+	decoder.Debug(debug)
 
-	if h {
+	if help {
 		usage()
 		os.Exit(0)
 	}
@@ -122,8 +124,8 @@ func checkDecodeErr(t string, err error) {
 }
 
 func usage() {
-	fmt.Fprintf(os.Stderr, `dmidecode version: 0.0.1
-Usage: dmidecode [-h] [-t type] 
+	fmt.Fprintf(os.Stderr, `dmidecode version: 0.1.2
+Usage: dmidecode [-h] [-d] [-t type] 
 
 Options:
 `)
@@ -131,7 +133,8 @@ Options:
 }
 
 func init() {
-	flag.BoolVar(&h, "h", false, "this help")
+	flag.BoolVar(&help, "h", false, "this help")
+	flag.BoolVar(&debug, "d", false, "debug mode")
 	flag.StringVar(&t, "t", "", "dmidocode type [bios, system, baseboard, chassis, onboard, port, processor, memory, slot]")
 	flag.Usage = usage
 }

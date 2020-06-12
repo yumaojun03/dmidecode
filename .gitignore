@@ -16,6 +16,7 @@ build
 coverage.txt
 .idea
 
+main
 dmidecode
 go-dmidecode
 dmidecode-go

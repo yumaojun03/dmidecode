@@ -1,6 +1,8 @@
 package dmidecode
 
 import (
+	"fmt"
+
 	"github.com/yumaojun03/dmidecode/parser/baseboard"
 	"github.com/yumaojun03/dmidecode/parser/bios"
 	"github.com/yumaojun03/dmidecode/parser/chassis"
@@ -58,6 +60,7 @@ func New() (*Decoder, error) {
 
 // Decoder decoder
 type Decoder struct {
+	debug bool
 	total int
 
 	bios                   []*smbios.Structure
@@ -74,10 +77,16 @@ type Decoder struct {
 	systemSlots            []*smbios.Structure
 }
 
+// Debug 开关Debug
+func (d *Decoder) Debug(on bool) {
+	d.debug = on
+}
+
 // BIOS 解析bios信息
 func (d *Decoder) BIOS() ([]*bios.Information, error) {
 	infos := make([]*bios.Information, 0, len(d.bios))
 	for i := range d.bios {
+		d.println(d.bios[i])
 		info, err := bios.Parse(d.bios[i])
 		if err != nil {
 			return nil, err
@@ -92,6 +101,7 @@ func (d *Decoder) BIOS() ([]*bios.Information, error) {
 func (d *Decoder) System() ([]*system.Information, error) {
 	infos := make([]*system.Information, 0, len(d.system))
 	for i := range d.system {
+		d.println(d.system[i])
 		info, err := system.Parse(d.system[i])
 		if err != nil {
 			return nil, err
@@ -106,6 +116,7 @@ func (d *Decoder) System() ([]*system.Information, error) {
 func (d *Decoder) BaseBoard() ([]*baseboard.Information, error) {
 	infos := make([]*baseboard.Information, 0, len(d.baseBoard))
 	for i := range d.baseBoard {
+		d.println(d.baseBoard[i])
 		info, err := baseboard.Parse(d.baseBoard[i])
 		if err != nil {
 			return nil, err
@@ -120,6 +131,7 @@ func (d *Decoder) BaseBoard() ([]*baseboard.Information, error) {
 func (d *Decoder) Chassis() ([]*chassis.Information, error) {
 	infos := make([]*chassis.Information, 0, len(d.chassis))
 	for i := range d.chassis {
+		d.println(d.chassis[i])
 		info, err := chassis.Parse(d.chassis[i])
 		if err != nil {
 			return nil, err
@@ -134,6 +146,7 @@ func (d *Decoder) Chassis() ([]*chassis.Information, error) {
 func (d *Decoder) OnboardExtended() ([]*onboard.ExtendedInformation, error) {
 	infos := make([]*onboard.ExtendedInformation, 0, len(d.onBoardExtendedDevices))
 	for i := range d.onBoardExtendedDevices {
+		d.println(d.onBoardExtendedDevices[i])
 		info, err := onboard.ParseType41(d.onBoardExtendedDevices[i])
 		if err != nil {
 			return nil, err
@@ -148,6 +161,7 @@ func (d *Decoder) OnboardExtended() ([]*onboard.ExtendedInformation, error) {
 func (d *Decoder) Onboard() ([]*onboard.Information, error) {
 	infos := make([]*onboard.Information, 0, len(d.onBoardDevices))
 	for i := range d.onBoardDevices {
+		d.println(d.onBoardDevices[i])
 		info, err := onboard.ParseType10(d.onBoardDevices[i])
 		if err != nil {
 			return nil, err
@@ -162,6 +176,7 @@ func (d *Decoder) Onboard() ([]*onboard.Information, error) {
 func (d *Decoder) PortConnector() ([]*port.Information, error) {
 	infos := make([]*port.Information, 0, len(d.portConnector))
 	for i := range d.portConnector {
+		d.println(d.portConnector[i])
 		info, err := port.Parse(d.portConnector[i])
 		if err != nil {
 			return nil, err
@@ -176,6 +191,7 @@ func (d *Decoder) PortConnector() ([]*port.Information, error) {
 func (d *Decoder) Processor() ([]*processor.Processor, error) {
 	infos := make([]*processor.Processor, 0, len(d.processor))
 	for i := range d.processor {
+		d.println(d.processor[i])
 		info, err := processor.ParseProcessor(d.processor[i])
 		if err != nil {
 			return nil, err
@@ -190,6 +206,7 @@ func (d *Decoder) Processor() ([]*processor.Processor, error) {
 func (d *Decoder) ProcessorCache() ([]*processor.Cache, error) {
 	infos := make([]*processor.Cache, 0, len(d.cache))
 	for i := range d.cache {
+		d.println(d.cache[i])
 		info, err := processor.ParseCache(d.cache[i])
 		if err != nil {
 			return nil, err
@@ -204,6 +221,7 @@ func (d *Decoder) ProcessorCache() ([]*processor.Cache, error) {
 func (d *Decoder) MemoryArray() ([]*memory.PhysicalMemoryArray, error) {
 	infos := make([]*memory.PhysicalMemoryArray, 0, len(d.physicalMemoryArray))
 	for i := range d.physicalMemoryArray {
+		d.println(d.physicalMemoryArray[i])
 		info, err := memory.ParseMemoryArray(d.physicalMemoryArray[i])
 		if err != nil {
 			return nil, err
@@ -218,6 +236,7 @@ func (d *Decoder) MemoryArray() ([]*memory.PhysicalMemoryArray, error) {
 func (d *Decoder) MemoryDevice() ([]*memory.MemoryDevice, error) {
 	infos := make([]*memory.MemoryDevice, 0, len(d.memoryDevice))
 	for i := range d.memoryDevice {
+		d.println(d.memoryDevice[i])
 		info, err := memory.ParseMemoryDevice(d.memoryDevice[i])
 		if err != nil {
 			return nil, err
@@ -232,6 +251,7 @@ func (d *Decoder) MemoryDevice() ([]*memory.MemoryDevice, error) {
 func (d *Decoder) Slot() ([]*slot.SystemSlot, error) {
 	infos := make([]*slot.SystemSlot, 0, len(d.systemSlots))
 	for i := range d.systemSlots {
+		d.println(d.systemSlots[i])
 		info, err := slot.Parse(d.systemSlots[i])
 		if err != nil {
 			return nil, err
@@ -240,6 +260,12 @@ func (d *Decoder) Slot() ([]*slot.SystemSlot, error) {
 	}
 
 	return infos, nil
+}
+
+func (d *Decoder) println(s *smbios.Structure) {
+	if d.debug {
+		fmt.Printf("[Debug] *smbios.Structure: %s\n", s)
+	}
 }
 
 // ALL decode all

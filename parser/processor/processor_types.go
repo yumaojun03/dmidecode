@@ -634,7 +634,6 @@ func (p ProcessorStatus) String() string {
 	}
 
 	resp := []string{}
-	fmt.Println(uint8(p) & 64)
 	switch uint8(p) & 64 {
 	case 0:
 		resp = append(resp, "Unpopulated")
