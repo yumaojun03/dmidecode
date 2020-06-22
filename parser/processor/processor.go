@@ -40,7 +40,7 @@ func (p Processor) String() string {
 		"\tProcessor Type: %s\n"+
 		"\tFamily: %s\n"+
 		"\tManufacturer: %s\n"+
-		"\tID: %d\n"+
+		"\tID: %s\n"+
 		"\tVersion: %s\n"+
 		"\tVoltage: %s\n"+
 		"\tExternal Clock: %d\n"+

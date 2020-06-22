@@ -581,7 +581,16 @@ func (p ProcessorFamily) String() string {
 	return families[p]
 }
 
-type ProcessorID uint64
+type ProcessorID []byte
+
+func (p ProcessorID) String() string {
+	t := []string{}
+	for i := range p {
+		t = append(t, fmt.Sprintf("%02X", p[i]))
+	}
+
+	return strings.Join(t, " ")
+}
 
 type ProcessorVoltage byte
 
