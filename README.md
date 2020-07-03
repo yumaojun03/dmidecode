@@ -9,6 +9,7 @@
 
 功能和命令行的dmidecode工具一样, 使用方式参考: [example](./example/main.go)
 
+开发过程相关小博客: [使用Golang重新实现dmidecode](https://www.jianshu.com/p/2e7ce2946b6b)
 
 ## 安装方式
 
