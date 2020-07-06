@@ -34,6 +34,10 @@ func main() {
 		os.Exit(0)
 	}
 
+	eps := decoder.EntryPoint()
+	fmt.Printf("SMBIOS %d.%d.%d - table: address: %#x, size: %d\n",
+		eps.Major, eps.Minor, eps.Revision, eps.Address, eps.Size)
+
 	switch t {
 	case "":
 		infos, err := decoder.ALL()

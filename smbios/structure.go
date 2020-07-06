@@ -8,6 +8,26 @@ import (
 	"github.com/digitalocean/go-smbios/smbios"
 )
 
+// NewEntryPoint todo
+func NewEntryPoint(major, minor, rev, addr, size int) *EntryPoint {
+	return &EntryPoint{
+		Major:    major,
+		Minor:    minor,
+		Revision: rev,
+		Address:  addr,
+		Size:     size,
+	}
+}
+
+// EntryPoint EPS
+type EntryPoint struct {
+	Address  int `json:"address,omitempty"`
+	Size     int `json:"size,omitempty"`
+	Major    int `json:"major,omitempty"`
+	Minor    int `json:"minor,omitempty"`
+	Revision int `json:"revision,omitempty"`
+}
+
 // A Header is a Structure's header.
 type Header struct {
 	Type   uint8
@@ -50,11 +70,11 @@ func (s *Structure) Type() uint8 {
 }
 
 // ReadStructures 读取smbios结构数据
-func ReadStructures() ([]*Structure, error) {
+func ReadStructures() (*EntryPoint, []*Structure, error) {
 	// Find SMBIOS data in operating system-specific location.
 	rc, ep, err := smbios.Stream()
 	if err != nil {
-		return nil, fmt.Errorf("failed to open stream: %v", err)
+		return nil, nil, fmt.Errorf("failed to open stream: %v", err)
 	}
 	// Be sure to close the stream!
 	defer rc.Close()
@@ -63,18 +83,16 @@ func ReadStructures() ([]*Structure, error) {
 	d := smbios.NewDecoder(rc)
 	ss, err := d.Decode()
 	if err != nil {
-		return nil, fmt.Errorf("failed to decode structures: %v", err)
+		return nil, nil, fmt.Errorf("failed to decode structures: %v", err)
 	}
 
 	// Determine SMBIOS version and table location from entry point.
 	major, minor, rev := ep.Version()
 	addr, size := ep.Table()
-
-	fmt.Printf("SMBIOS %d.%d.%d - table: address: %#x, size: %d\n",
-		major, minor, rev, addr, size)
-
+	eps := NewEntryPoint(major, minor, rev, addr, size)
 	data := convertNative(ss)
-	return data, nil
+
+	return eps, data, nil
 }
 
 func convertNative(ss []*smbios.Structure) []*Structure {

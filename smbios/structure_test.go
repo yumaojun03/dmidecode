@@ -9,7 +9,7 @@ import (
 )
 
 func TestRead(t *testing.T) {
-	ss, err := smbios.ReadStructures()
+	_, ss, err := smbios.ReadStructures()
 	if assert.NoError(t, err) {
 		t.Log(ss)
 	}

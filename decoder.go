@@ -17,12 +17,13 @@ import (
 
 // New 实例化
 func New() (*Decoder, error) {
-	ss, err := smbios.ReadStructures()
+	eps, ss, err := smbios.ReadStructures()
 	if err != nil {
 		return nil, err
 	}
 
 	d := new(Decoder)
+	d.eps = eps
 	d.total = len(ss)
 
 	for i := range ss {
@@ -63,6 +64,7 @@ type Decoder struct {
 	debug bool
 	total int
 
+	eps                    *smbios.EntryPoint
 	bios                   []*smbios.Structure
 	system                 []*smbios.Structure
 	baseBoard              []*smbios.Structure
@@ -260,6 +262,11 @@ func (d *Decoder) Slot() ([]*slot.SystemSlot, error) {
 	}
 
 	return infos, nil
+}
+
+// EntryPoint todo
+func (d *Decoder) EntryPoint() *smbios.EntryPoint {
+	return d.eps
 }
 
 func (d *Decoder) println(s *smbios.Structure) {
