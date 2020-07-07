@@ -128,7 +128,7 @@ func checkDecodeErr(t string, err error) {
 }
 
 func usage() {
-	fmt.Fprintf(os.Stderr, `dmidecode version: 0.1.2
+	fmt.Fprintf(os.Stderr, `dmidecode version: 0.1.3
 Usage: dmidecode [-h] [-d] [-t type] 
 
 Options:

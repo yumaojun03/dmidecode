@@ -12,20 +12,14 @@ func ParseType41(s *smbios.Structure) (*ExtendedInformation, error) {
 		return nil, fmt.Errorf("ParseType41 only parse type 41 data, but now: %d", s.Type())
 	}
 
-	data := s.Formatted
-
 	info := &ExtendedInformation{
 		ReferenceDesignation: s.GetString(0x0),
-		DeviceType:           ExtendedInformationType(data[0x01] & 127),
-		DeviceStatus:         DeviceStatus(data[0x01] >> 7),
-		DeviceTypeInstance:   data[0x02],
-		SegmentGroupNumber:   smbios.U16(data[0x03:0x05]),
-		BusNumber:            data[0x05],
-		DeviceFunctionNumber: data[0x06],
-	}
-
-	if len(s.Formatted) >= 0x06 {
-		info.DeviceFunctionNumber = data[0x06]
+		DeviceType:           ExtendedInformationType(s.GetByte(0x01) & 127),
+		DeviceStatus:         DeviceStatus(s.GetByte(0x01) >> 7),
+		DeviceTypeInstance:   s.GetByte(0x02),
+		SegmentGroupNumber:   s.U16(0x03, 0x05),
+		BusNumber:            s.GetByte(0x05),
+		DeviceFunctionNumber: s.GetByte(0x06),
 	}
 
 	return info, nil

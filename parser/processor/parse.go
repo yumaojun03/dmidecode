@@ -51,19 +51,17 @@ func ParseProcessor(s *smbios.Structure) (*Processor, error) {
 
 // ParseCache 缓存信息
 func ParseCache(s *smbios.Structure) (*Cache, error) {
-	data := s.Formatted
-
 	cache := &Cache{
 		SocketDesignation:   s.GetString(0x0),
-		Configuration:       NewCacheConfiguration(smbios.U16(data[0x01:0x03])),
-		MaximumCacheSize:    NewCacheSize(smbios.U16(data[0x03:0x05])),
-		InstalledSize:       NewCacheSize(smbios.U16(data[0x05:0x07])),
-		SupportedSRAMType:   CacheSRAMType(smbios.U16(data[0x07:0x09])),
-		CurrentSRAMType:     CacheSRAMType(smbios.U16(data[0x09:0x0B])),
-		CacheSpeed:          CacheSpeed(data[0x0B]),
-		ErrorCorrectionType: CacheErrorCorrectionType(data[0xC]),
-		SystemCacheType:     CacheSystemCacheType(data[0xD]),
-		Associativity:       CacheAssociativity(data[0xE]),
+		Configuration:       NewCacheConfiguration(s.U16(0x01, 0x03)),
+		MaximumCacheSize:    NewCacheSize(s.U16(0x03, 0x05)),
+		InstalledSize:       NewCacheSize(s.U16(0x05, 0x07)),
+		SupportedSRAMType:   CacheSRAMType(s.U16(0x07, 0x09)),
+		CurrentSRAMType:     CacheSRAMType(s.U16(0x09, 0x0b)),
+		CacheSpeed:          CacheSpeed(s.GetByte(0x0b)),
+		ErrorCorrectionType: CacheErrorCorrectionType(s.GetByte(0xc)),
+		SystemCacheType:     CacheSystemCacheType(s.GetByte(0xd)),
+		Associativity:       CacheAssociativity(s.GetByte(0xe)),
 	}
 
 	return cache, nil

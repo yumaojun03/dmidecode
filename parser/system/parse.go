@@ -9,16 +9,14 @@ import (
 
 // Parse 解析smbios struct数据
 func Parse(s *smbios.Structure) (*Information, error) {
-	data := s.Formatted
-
 	return &Information{
 		Header:       s.Header,
 		Manufacturer: s.GetString(0x0),
 		ProductName:  s.GetString(0x1),
 		Version:      s.GetString(0x2),
 		SerialNumber: s.GetString(0x3),
-		UUID:         uuid(data[0x04:0x14], s.GetString(2)),
-		WakeUpType:   WakeUpType(data[0x14]),
+		UUID:         uuid(s.GetBytes(0x04, 0x14), s.GetString(2)),
+		WakeUpType:   WakeUpType(s.GetByte(0x14)),
 		SKUNumber:    s.GetString(0x15),
 		Family:       s.GetString(0x16),
 	}, nil
