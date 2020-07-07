@@ -20,31 +20,30 @@ import (
 // 7.5.3.3 ARM64-class CPUs
 // 		For ARM64-class CPUs, the Processor ID field contains two DWORD-formatted values. Th
 func ParseProcessor(s *smbios.Structure) (*Processor, error) {
-	data := s.Formatted
 	p := &Processor{
 		SocketDesignation: s.GetString(0x0),
-		ProcessorType:     ProcessorType(data[0x01]),
-		Family:            ProcessorFamily(data[0x02]),
+		ProcessorType:     ProcessorType(s.GetByte(0x01)),
+		Family:            ProcessorFamily(s.GetByte(0x02)),
 		Manufacturer:      s.GetString(0x3),
-		ID:                ProcessorID(data[0x4:0xc]),
+		ID:                ProcessorID(s.GetBytes(0x4, 0xc)),
 		Version:           s.GetString(0xc),
-		Voltage:           ProcessorVoltage(data[0xD]),
-		ExternalClock:     smbios.U16(data[0xE:0x10]),
-		MaxSpeed:          smbios.U16(data[0x10:0x12]),
-		CurrentSpeed:      smbios.U16(data[0x12:0x14]),
-		Status:            ProcessorStatus(data[0x14]),
-		Upgrade:           ProcessorUpgrade(data[0x15]),
-		L1CacheHandle:     smbios.U16(data[0x16:0x18]),
-		L2CacheHandle:     smbios.U16(data[0x18:0x1E]),
-		L3CacheHandle:     smbios.U16(data[0x1E:0x20]),
+		Voltage:           ProcessorVoltage(s.GetByte(0xD)),
+		ExternalClock:     s.U16(0xE, 0x10),
+		MaxSpeed:          s.U16(0x10, 0x12),
+		CurrentSpeed:      s.U16(0x12, 0x14),
+		Status:            ProcessorStatus(s.GetByte(0x14)),
+		Upgrade:           ProcessorUpgrade(s.GetByte(0x15)),
+		L1CacheHandle:     s.U16(0x16, 0x18),
+		L2CacheHandle:     s.U16(0x18, 0x1E),
+		L3CacheHandle:     s.U16(0x1E, 0x20),
 		SerialNumber:      s.GetString(0x1c),
 		AssetTag:          s.GetString(0x1d),
 		PartNumber:        s.GetString(0x1e),
-		CoreCount:         data[0x1F],
-		CoreEnabled:       data[0x20],
-		ThreadCount:       data[0x21],
-		Characteristics:   ProcessorCharacteristics(smbios.U16(data[0x22:0x24])),
-		Family2:           ProcessorFamily(data[0x24]),
+		CoreCount:         s.GetByte(0x1F),
+		CoreEnabled:       s.GetByte(0x20),
+		ThreadCount:       s.GetByte(0x21),
+		Characteristics:   ProcessorCharacteristics(s.U16(0x22, 0x24)),
+		Family2:           ProcessorFamily(s.GetByte(0x24)),
 	}
 
 	return p, nil

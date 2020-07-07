@@ -97,14 +97,14 @@ func main() {
 			fmt.Println(pcinfos[i])
 		}
 	case "memory":
-		infos, err := decoder.MemoryArray()
+		mainfos, err := decoder.MemoryArray()
 		checkDecodeErr(t, err)
-		for i := range infos {
-			fmt.Println(infos[i])
+		for i := range mainfos {
+			fmt.Println(mainfos[i])
 		}
 		mdinfos, err := decoder.MemoryDevice()
 		checkDecodeErr(t, err)
-		for i := range infos {
+		for i := range mdinfos {
 			fmt.Println(mdinfos[i])
 		}
 	case "slot":

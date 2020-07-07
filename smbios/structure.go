@@ -49,9 +49,53 @@ type Structure struct {
 	formattedCount *int
 }
 
+// GetByte todo
+func (s *Structure) GetByte(index int) byte {
+	if s.IsOverFlow(index) {
+		return 0
+	}
+	return s.Formatted[index]
+}
+
+// GetBytes todo
+func (s *Structure) GetBytes(start, end int) []byte {
+	if s.IsOverFlow(end) {
+		return []byte{}
+	}
+
+	return s.Formatted[start:end]
+}
+
+// U16 todo
+func (s *Structure) U16(start, end int) uint16 {
+	if s.IsOverFlow(end) {
+		return 0
+	}
+
+	return U16(s.Formatted[start:end])
+}
+
+// U32 todo
+func (s *Structure) U32(start, end int) uint32 {
+	if s.IsOverFlow(end) {
+		return 0
+	}
+
+	return U32(s.Formatted[start:end])
+}
+
+// U64 todo
+func (s *Structure) U64(start, end int) uint64 {
+	if s.IsOverFlow(end) {
+		return 0
+	}
+
+	return U64(s.Formatted[start:end])
+}
+
 // IsOverFlow 判断是否越界
-func (s *Structure) IsOverFlow(length int) bool {
-	return s.DataLength() >= length
+func (s *Structure) IsOverFlow(index int) bool {
+	return index+1 > s.DataLength()
 }
 
 // DataLength data长度
