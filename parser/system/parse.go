@@ -8,8 +8,10 @@ import (
 )
 
 // Parse 解析smbios struct数据
-func Parse(s *smbios.Structure) (*Information, error) {
-	return &Information{
+func Parse(s *smbios.Structure) (info *Information, err error) {
+	defer smbios.ParseRecovery(s, &err)
+
+	info = &Information{
 		Header:       s.Header,
 		Manufacturer: s.GetString(0x0),
 		ProductName:  s.GetString(0x1),
@@ -19,7 +21,9 @@ func Parse(s *smbios.Structure) (*Information, error) {
 		WakeUpType:   WakeUpType(s.GetByte(0x14)),
 		SKUNumber:    s.GetString(0x15),
 		Family:       s.GetString(0x16),
-	}, nil
+	}
+
+	return info, nil
 }
 
 // UUID 主板uuid

@@ -7,12 +7,14 @@ import (
 )
 
 // ParseType41 解析
-func ParseType41(s *smbios.Structure) (*ExtendedInformation, error) {
+func ParseType41(s *smbios.Structure) (info *ExtendedInformation, err error) {
+	defer smbios.ParseRecovery(s, &err)
+
 	if s.Type() != 41 {
 		return nil, fmt.Errorf("ParseType41 only parse type 41 data, but now: %d", s.Type())
 	}
 
-	info := &ExtendedInformation{
+	info = &ExtendedInformation{
 		ReferenceDesignation: s.GetString(0x0),
 		DeviceType:           ExtendedInformationType(s.GetByte(0x01) & 127),
 		DeviceStatus:         DeviceStatus(s.GetByte(0x01) >> 7),
@@ -26,7 +28,9 @@ func ParseType41(s *smbios.Structure) (*ExtendedInformation, error) {
 }
 
 // ParseType10 解析
-func ParseType10(s *smbios.Structure) (*Information, error) {
+func ParseType10(s *smbios.Structure) (info *Information, err error) {
+	defer smbios.ParseRecovery(s, &err)
+
 	if s.Type() != 10 {
 		return nil, fmt.Errorf("ParseType10 only parse type 10 data, but now: %d", s.Type())
 	}
@@ -43,7 +47,7 @@ func ParseType10(s *smbios.Structure) (*Information, error) {
 		devices = append(devices, d)
 	}
 
-	info := &Information{
+	info = &Information{
 		Devices: devices,
 	}
 

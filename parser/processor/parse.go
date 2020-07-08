@@ -19,8 +19,10 @@ import (
 // 		08h-0Bh) is the contents of the Main ID Register (MIDR); the second (offsets 0Ch-0Fh) is zero.
 // 7.5.3.3 ARM64-class CPUs
 // 		For ARM64-class CPUs, the Processor ID field contains two DWORD-formatted values. Th
-func ParseProcessor(s *smbios.Structure) (*Processor, error) {
-	p := &Processor{
+func ParseProcessor(s *smbios.Structure) (info *Processor, err error) {
+	defer smbios.ParseRecovery(s, &err)
+
+	info = &Processor{
 		SocketDesignation: s.GetString(0x0),
 		ProcessorType:     ProcessorType(s.GetByte(0x01)),
 		Family:            ProcessorFamily(s.GetByte(0x02)),
@@ -46,12 +48,14 @@ func ParseProcessor(s *smbios.Structure) (*Processor, error) {
 		Family2:           ProcessorFamily(s.GetByte(0x24)),
 	}
 
-	return p, nil
+	return info, nil
 }
 
 // ParseCache 缓存信息
-func ParseCache(s *smbios.Structure) (*Cache, error) {
-	cache := &Cache{
+func ParseCache(s *smbios.Structure) (info *Cache, err error) {
+	defer smbios.ParseRecovery(s, &err)
+
+	info = &Cache{
 		SocketDesignation:   s.GetString(0x0),
 		Configuration:       NewCacheConfiguration(s.U16(0x01, 0x03)),
 		MaximumCacheSize:    NewCacheSize(s.U16(0x03, 0x05)),
@@ -64,5 +68,5 @@ func ParseCache(s *smbios.Structure) (*Cache, error) {
 		Associativity:       CacheAssociativity(s.GetByte(0xe)),
 	}
 
-	return cache, nil
+	return info, nil
 }

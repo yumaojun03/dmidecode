@@ -5,8 +5,10 @@ import (
 )
 
 // Parse 解析底座信息
-func Parse(s *smbios.Structure) (*Information, error) {
-	info := &Information{
+func Parse(s *smbios.Structure) (info *Information, err error) {
+	defer smbios.ParseRecovery(s, &err)
+
+	info = &Information{
 		Manufacturer:                 s.GetString(0x0),
 		Type:                         Type(s.GetByte(0x01) & 127),
 		Lock:                         Lock(s.GetByte(0x01) >> 7),

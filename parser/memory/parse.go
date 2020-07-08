@@ -5,8 +5,10 @@ import (
 )
 
 // ParseMemoryDevice 解析
-func ParseMemoryDevice(s *smbios.Structure) (*MemoryDevice, error) {
-	md := &MemoryDevice{
+func ParseMemoryDevice(s *smbios.Structure) (info *MemoryDevice, err error) {
+	defer smbios.ParseRecovery(s, &err)
+
+	info = &MemoryDevice{
 		PhysicalMemoryArrayHandle:  s.U16(0x00, 0x02),
 		ErrorInformationHandle:     s.U16(0x02, 0x04),
 		TotalWidth:                 s.U16(0x04, 0x06),
@@ -30,12 +32,14 @@ func ParseMemoryDevice(s *smbios.Structure) (*MemoryDevice, error) {
 		ConfiguredVoltage:          s.U16(0x22, 0x24),
 	}
 
-	return md, nil
+	return info, nil
 }
 
 // ParseMemoryArray todo
-func ParseMemoryArray(s *smbios.Structure) (*PhysicalMemoryArray, error) {
-	mr := &PhysicalMemoryArray{
+func ParseMemoryArray(s *smbios.Structure) (info *PhysicalMemoryArray, err error) {
+	defer smbios.ParseRecovery(s, &err)
+
+	info = &PhysicalMemoryArray{
 		Header:                  s.Header,
 		Location:                PhysicalMemoryArrayLocation(s.GetByte(0x00)),
 		Use:                     PhysicalMemoryArrayUse(s.GetByte(0x01)),
@@ -46,5 +50,5 @@ func ParseMemoryArray(s *smbios.Structure) (*PhysicalMemoryArray, error) {
 		ExtendedMaximumCapacity: s.U64(0xb, 0x13),
 	}
 
-	return mr, nil
+	return info, nil
 }
