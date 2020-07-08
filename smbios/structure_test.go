@@ -26,6 +26,48 @@ func TestRead(t *testing.T) {
 
 }
 
+func TestTypes(t *testing.T) {
+	should := assert.New(t)
+
+	should.Equal("System Boot", smbios.SystemBoot.String())
+}
+
+func TestGetByte(t *testing.T) {
+	should := assert.New(t)
+
+	should.Equal(s.GetByte(0x0b), uint8(0xff))
+}
+
+func TestGetBytes(t *testing.T) {
+	should := assert.New(t)
+
+	should.Equal(s.GetBytes(0x09, 0x0b), []uint8([]byte{0xff, 0xff}))
+}
+
+func TestString(t *testing.T) {
+	should := assert.New(t)
+
+	should.Equal(s.GetString(0x0), "PCIe Slot 1")
+}
+
+func TestU16(t *testing.T) {
+	should := assert.New(t)
+
+	should.Equal(s.U16(0x05, 0x07), uint16(0x1))
+}
+
+func TestU32(t *testing.T) {
+	should := assert.New(t)
+
+	should.Equal(s.U32(0x05, 0x09), uint32(0x1040001))
+}
+
+func TestU64(t *testing.T) {
+	should := assert.New(t)
+
+	should.Equal(s.U64(0x05, 0x0d), uint64(0x0))
+}
+
 func TestParsePanice(t *testing.T) {
 	should := assert.New(t)
 
