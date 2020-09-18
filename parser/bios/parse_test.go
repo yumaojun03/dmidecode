@@ -4,7 +4,6 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/assert"
-
 	"github.com/yumaojun03/dmidecode/parser/bios"
 	"github.com/yumaojun03/dmidecode/smbios"
 )
@@ -22,8 +21,16 @@ var (
 )
 
 func TestParse(t *testing.T) {
+	should := assert.New(t)
+
 	bios, err := bios.Parse(s)
 	if assert.NoError(t, err) {
+		should.Equal("Xen", bios.Vendor)
+		should.Equal("4.7.2-2.2", bios.BIOSVersion)
+		should.Equal("05/11/2017", bios.ReleaseDate)
+		should.Equal("96 kB", bios.RuntimeSize.String())
+		should.Equal("64 kB", bios.RomSize.String())
+		should.Equal(uint16(0xe800), bios.StartingAddressSegment)
 		t.Log(bios)
 	}
 }

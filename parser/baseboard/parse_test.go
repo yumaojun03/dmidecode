@@ -4,7 +4,6 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/assert"
-
 	"github.com/yumaojun03/dmidecode/parser/baseboard"
 	"github.com/yumaojun03/dmidecode/smbios"
 )
@@ -22,8 +21,13 @@ var (
 )
 
 func TestParse(t *testing.T) {
+	should := assert.New(t)
+
 	bios, err := baseboard.Parse(s)
 	if assert.NoError(t, err) {
-		t.Log(bios)
+		should.Equal("Dell Inc.", bios.Manufacturer)
+		should.Equal("0CNCJW", bios.ProductName)
+		should.Equal("A05", bios.Version)
+		should.Equal(".HVSRF52.CN7475154A0700.", bios.SerialNumber)
 	}
 }
