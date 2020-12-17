@@ -24,5 +24,5 @@ func (d DeviceChemistry) String() string {
 		"Zinc air",
 		"Lithium Polymer",
 	}
-	return factors[d-1]
+	return factors[d]
 }
