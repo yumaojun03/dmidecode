@@ -43,34 +43,89 @@ func main() {
 		infos, err := decoder.ALL()
 		checkDecodeErr(t, err)
 		infos.Print()
-	case "bios":
+	case "bios", "0":
 		infos, err := decoder.BIOS()
 		checkDecodeErr(t, err)
 		for i := range infos {
 			fmt.Println(infos[i])
 		}
-	case "system":
+	case "system", "1":
 		infos, err := decoder.System()
 		checkDecodeErr(t, err)
 		for i := range infos {
 			fmt.Println(infos[i])
 		}
-		oems, err := decoder.OEM()
-		checkDecodeErr(t, err)
-		for i := range oems {
-			fmt.Println(oems[i])
-		}
-	case "baseboard":
+	case "baseboard", "2":
 		infos, err := decoder.BaseBoard()
 		checkDecodeErr(t, err)
 		for i := range infos {
 			fmt.Println(infos[i])
 		}
-	case "chassis":
+	case "chassis", "3":
 		infos, err := decoder.Chassis()
 		checkDecodeErr(t, err)
 		for i := range infos {
 			fmt.Println(infos[i])
+		}
+	case "4":
+		infos, err := decoder.Processor()
+		checkDecodeErr(t, err)
+		for i := range infos {
+			fmt.Println(infos[i])
+		}
+	case "7":
+		pcinfos, err := decoder.ProcessorCache()
+		checkDecodeErr(t, err)
+		for i := range pcinfos {
+			fmt.Println(pcinfos[i])
+		}
+	case "port", "8":
+		infos, err := decoder.PortConnector()
+		checkDecodeErr(t, err)
+		for i := range infos {
+			fmt.Println(infos[i])
+		}
+	case "slot", "9":
+		infos, err := decoder.Slot()
+		checkDecodeErr(t, err)
+		for i := range infos {
+			fmt.Println(infos[i])
+		}
+	case "10":
+		infos, err := decoder.Onboard()
+		checkDecodeErr(t, err)
+		for i := range infos {
+			fmt.Println(infos[i])
+		}
+	case "16":
+		mainfos, err := decoder.MemoryArray()
+		checkDecodeErr(t, err)
+		for i := range mainfos {
+			fmt.Println(mainfos[i])
+		}
+	case "17":
+		mdinfos, err := decoder.MemoryDevice()
+		checkDecodeErr(t, err)
+		for i := range mdinfos {
+			fmt.Println(mdinfos[i])
+		}
+	case "11":
+		oems, err := decoder.OEM()
+		checkDecodeErr(t, err)
+		for i := range oems {
+			fmt.Println(oems[i])
+		}
+	case "battery", "22":
+		infos, err := decoder.Battery()
+		checkDecodeErr(t, err)
+		for i := range infos {
+			fmt.Println(infos[i])
+		}
+	case "41":
+		einfos, err := decoder.OnboardExtended()
+		checkDecodeErr(t, err)
+		for i := range einfos {
+			fmt.Println(einfos[i])
 		}
 	case "onboard":
 		infos, err := decoder.Onboard()
@@ -78,17 +133,10 @@ func main() {
 		for i := range infos {
 			fmt.Println(infos[i])
 		}
-
 		einfos, err := decoder.OnboardExtended()
 		checkDecodeErr(t, err)
 		for i := range einfos {
 			fmt.Println(einfos[i])
-		}
-	case "port":
-		infos, err := decoder.PortConnector()
-		checkDecodeErr(t, err)
-		for i := range infos {
-			fmt.Println(infos[i])
 		}
 	case "processor":
 		infos, err := decoder.Processor()
@@ -111,18 +159,6 @@ func main() {
 		checkDecodeErr(t, err)
 		for i := range mdinfos {
 			fmt.Println(mdinfos[i])
-		}
-	case "slot":
-		infos, err := decoder.Slot()
-		checkDecodeErr(t, err)
-		for i := range infos {
-			fmt.Println(infos[i])
-		}
-	case "battery":
-		infos, err := decoder.Battery()
-		checkDecodeErr(t, err)
-		for i := range infos {
-			fmt.Println(infos[i])
 		}
 	default:
 		fmt.Printf("ERR: unknown decode type %s\n", t)
