@@ -118,6 +118,12 @@ func main() {
 		for i := range infos {
 			fmt.Println(infos[i])
 		}
+	case "battery":
+		infos, err := decoder.Battery()
+		checkDecodeErr(t, err)
+		for i := range infos {
+			fmt.Println(infos[i])
+		}
 	default:
 		fmt.Printf("ERR: unknown decode type %s\n", t)
 		usage()
@@ -134,7 +140,7 @@ func checkDecodeErr(t string, err error) {
 
 func usage() {
 	fmt.Fprintf(os.Stderr, `dmidecode version: 0.1.3
-Usage: dmidecode [-h] [-d] [-t type] 
+Usage: dmidecode [-h] [-d] [-t type]
 
 Options:
 `)

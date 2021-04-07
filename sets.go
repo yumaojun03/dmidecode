@@ -6,6 +6,7 @@ import (
 	"strings"
 
 	"github.com/yumaojun03/dmidecode/parser/baseboard"
+	"github.com/yumaojun03/dmidecode/parser/battery"
 	"github.com/yumaojun03/dmidecode/parser/bios"
 	"github.com/yumaojun03/dmidecode/parser/chassis"
 	"github.com/yumaojun03/dmidecode/parser/memory"
@@ -32,6 +33,7 @@ func NewInformationSet() *InformationSet {
 		memoryArray:     []*memory.PhysicalMemoryArray{},
 		memoryDevice:    []*memory.MemoryDevice{},
 		slot:            []*slot.SystemSlot{},
+		battery:         []*battery.Information{},
 	}
 }
 
@@ -50,6 +52,7 @@ type InformationSet struct {
 	memoryArray     []*memory.PhysicalMemoryArray
 	memoryDevice    []*memory.MemoryDevice
 	slot            []*slot.SystemSlot
+	battery         []*battery.Information
 }
 
 // Print 打印所有
@@ -89,6 +92,9 @@ func (s *InformationSet) Print() {
 	}
 	for i := range s.slot {
 		fmt.Println(s.slot[i])
+	}
+	for i := range s.battery {
+		fmt.Println(s.battery[i])
 	}
 }
 
@@ -138,6 +144,10 @@ func (s *InformationSet) addMemoryDevice(infos []*memory.MemoryDevice) {
 
 func (s *InformationSet) addSlot(infos []*slot.SystemSlot) {
 	s.slot = infos
+}
+
+func (s *InformationSet) addBattery(infos []*battery.Information) {
+	s.battery = infos
 }
 
 // NewErrorSet todo
