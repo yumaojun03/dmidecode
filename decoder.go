@@ -7,6 +7,7 @@ import (
 	"github.com/yumaojun03/dmidecode/parser/bios"
 	"github.com/yumaojun03/dmidecode/parser/chassis"
 	"github.com/yumaojun03/dmidecode/parser/memory"
+	"github.com/yumaojun03/dmidecode/parser/oem"
 	"github.com/yumaojun03/dmidecode/parser/onboard"
 	"github.com/yumaojun03/dmidecode/parser/port"
 	"github.com/yumaojun03/dmidecode/parser/processor"
@@ -36,14 +37,16 @@ func New() (*Decoder, error) {
 			d.baseBoard = append(d.baseBoard, ss[i])
 		case smbios.Chassis:
 			d.chassis = append(d.chassis, ss[i])
+		case smbios.Processor:
+			d.processor = append(d.processor, ss[i])
 		case smbios.OnBoardDevices:
 			d.onBoardDevices = append(d.onBoardDevices, ss[i])
+		case smbios.OEMStrings:
+			d.omeStrings = append(d.omeStrings, ss[i])
 		case smbios.OnBoardDevicesExtendedInformation:
 			d.onBoardExtendedDevices = append(d.onBoardExtendedDevices, ss[i])
 		case smbios.PortConnector:
 			d.portConnector = append(d.portConnector, ss[i])
-		case smbios.Processor:
-			d.processor = append(d.processor, ss[i])
 		case smbios.Cache:
 			d.cache = append(d.cache, ss[i])
 		case smbios.PhysicalMemoryArray:
@@ -70,6 +73,7 @@ type Decoder struct {
 	baseBoard              []*smbios.Structure
 	chassis                []*smbios.Structure
 	onBoardDevices         []*smbios.Structure
+	omeStrings             []*smbios.Structure
 	onBoardExtendedDevices []*smbios.Structure
 	portConnector          []*smbios.Structure
 	processor              []*smbios.Structure
@@ -165,6 +169,20 @@ func (d *Decoder) Onboard() ([]*onboard.Information, error) {
 	for i := range d.onBoardDevices {
 		d.println(d.onBoardDevices[i])
 		info, err := onboard.ParseType10(d.onBoardDevices[i])
+		if err != nil {
+			return nil, err
+		}
+		infos = append(infos, info)
+	}
+
+	return infos, nil
+}
+
+func (d *Decoder) OEM() ([]*oem.OEM, error) {
+	infos := make([]*oem.OEM, 0, len(d.omeStrings))
+	for i := range d.omeStrings {
+		d.println(d.omeStrings[i])
+		info, err := oem.Parse(d.omeStrings[i])
 		if err != nil {
 			return nil, err
 		}
@@ -295,6 +313,10 @@ func (d *Decoder) ALL() (*InformationSet, error) {
 	csInfos, err := d.Chassis()
 	errs.checkOrAdd(err)
 	sets.addChassis(csInfos)
+
+	oemInfos, err := d.OEM()
+	errs.checkOrAdd(err)
+	sets.addOEM(oemInfos)
 
 	obInfos, err := d.OnboardExtended()
 	errs.checkOrAdd(err)

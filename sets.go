@@ -9,6 +9,7 @@ import (
 	"github.com/yumaojun03/dmidecode/parser/bios"
 	"github.com/yumaojun03/dmidecode/parser/chassis"
 	"github.com/yumaojun03/dmidecode/parser/memory"
+	"github.com/yumaojun03/dmidecode/parser/oem"
 	"github.com/yumaojun03/dmidecode/parser/onboard"
 	"github.com/yumaojun03/dmidecode/parser/port"
 	"github.com/yumaojun03/dmidecode/parser/processor"
@@ -36,6 +37,7 @@ func NewInformationSet() *InformationSet {
 
 // InformationSet 集合
 type InformationSet struct {
+	oem             []*oem.OEM
 	bios            []*bios.Information
 	system          []*system.Information
 	baseboard       []*baseboard.Information
@@ -104,6 +106,10 @@ func (s *InformationSet) addBaseBoard(infos []*baseboard.Information) {
 
 func (s *InformationSet) addChassis(infos []*chassis.Information) {
 	s.chassis = infos
+}
+
+func (s *InformationSet) addOEM(infos []*oem.OEM) {
+	s.oem = infos
 }
 
 func (s *InformationSet) addOnboard(infos []*onboard.ExtendedInformation) {

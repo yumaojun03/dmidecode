@@ -55,6 +55,11 @@ func main() {
 		for i := range infos {
 			fmt.Println(infos[i])
 		}
+		oems, err := decoder.OEM()
+		checkDecodeErr(t, err)
+		for i := range oems {
+			fmt.Println(oems[i])
+		}
 	case "baseboard":
 		infos, err := decoder.BaseBoard()
 		checkDecodeErr(t, err)
