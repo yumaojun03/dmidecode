@@ -98,7 +98,7 @@ func main() {
 		}
 		pcinfos, err := decoder.ProcessorCache()
 		checkDecodeErr(t, err)
-		for i := range infos {
+		for i := range pcinfos {
 			fmt.Println(pcinfos[i])
 		}
 	case "memory":
