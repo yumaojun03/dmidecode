@@ -97,6 +97,12 @@ func main() {
 		for i := range infos {
 			fmt.Println(infos[i])
 		}
+	case "11":
+		oems, err := decoder.OEM()
+		checkDecodeErr(t, err)
+		for i := range oems {
+			fmt.Println(oems[i])
+		}
 	case "16":
 		mainfos, err := decoder.MemoryArray()
 		checkDecodeErr(t, err)
@@ -108,12 +114,6 @@ func main() {
 		checkDecodeErr(t, err)
 		for i := range mdinfos {
 			fmt.Println(mdinfos[i])
-		}
-	case "11":
-		oems, err := decoder.OEM()
-		checkDecodeErr(t, err)
-		for i := range oems {
-			fmt.Println(oems[i])
 		}
 	case "battery", "22":
 		infos, err := decoder.Battery()
