@@ -14,8 +14,8 @@ type OEM struct {
 
 func (s OEM) String() string {
 	var strs = ""
-	for _, s := range s.Strings {
-		strs += "\t" + s + "\n"
+	for i, s := range s.Strings {
+		strs += fmt.Sprintf("\tString %d: %s\n", i+1, s)
 	}
 	return fmt.Sprintf("Handle %x, DMI type %d, %d bytes\n"+
 		"OEM Strings\n"+strs,
