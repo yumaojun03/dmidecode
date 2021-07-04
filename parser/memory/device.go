@@ -81,3 +81,17 @@ func (m MemoryDevice) String() string {
 		m.ConfiguredVoltage,
 	)
 }
+
+//The value is in kilobytes
+func (m MemoryDevice) ActualSize() uint32 {
+	if m.Size == 0 || m.Size == 0xFFFF {
+		return 0
+	}
+	if m.Size == 0x7FFF {
+		return m.ExtendedSize * 1024
+	}
+	if m.Size&0x8000 != 0 {
+		return uint32(m.Size &^ 0x8000)
+	}
+	return uint32(m.Size) * 1024
+}
