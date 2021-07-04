@@ -120,6 +120,14 @@ func (c CacheSize) String() string {
 	return fmt.Sprintf("%d * %s", c.Size, c.Granularity)
 }
 
+//The value is in kilobytes
+func (c CacheSize) ActualSize() uint32 {
+	if c.Granularity == CacheGranularity1K {
+		return uint32(c.Size)
+	}
+	return uint32(c.Size) * 64
+}
+
 type CacheSRAMType uint16
 
 const (
