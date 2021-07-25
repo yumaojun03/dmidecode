@@ -2,6 +2,7 @@ package dmidecode
 
 import (
 	"fmt"
+	"github.com/yumaojun03/dmidecode/parser/power"
 
 	"github.com/yumaojun03/dmidecode/parser/baseboard"
 	"github.com/yumaojun03/dmidecode/parser/battery"
@@ -58,6 +59,8 @@ func New() (*Decoder, error) {
 			d.systemSlots = append(d.systemSlots, ss[i])
 		case smbios.PortableBattery:
 			d.portableBattery = append(d.portableBattery, ss[i])
+		case smbios.PowerSupply:
+			d.powerSupply = append(d.powerSupply, ss[i])
 		default:
 		}
 	}
@@ -85,6 +88,7 @@ type Decoder struct {
 	memoryDevice           []*smbios.Structure
 	systemSlots            []*smbios.Structure
 	portableBattery        []*smbios.Structure
+	powerSupply            []*smbios.Structure
 }
 
 // Debug 开关Debug
@@ -300,6 +304,19 @@ func (d *Decoder) Battery() ([]*battery.Information, error) {
 	return infos, nil
 }
 
+func (d *Decoder) PowerSupply() ([]*power.Information, error) {
+	infos := make([]*power.Information, 0, len(d.powerSupply))
+	for i := range d.powerSupply {
+		d.println(d.powerSupply[i])
+		info, err := power.Parse(d.powerSupply[i])
+		if err != nil {
+			return nil, err
+		}
+		infos = append(infos, info)
+	}
+	return infos, nil
+}
+
 // EntryPoint todo
 func (d *Decoder) EntryPoint() *smbios.EntryPoint {
 	return d.eps
@@ -367,6 +384,10 @@ func (d *Decoder) ALL() (*InformationSet, error) {
 	batteryInfos, err := d.Battery()
 	errs.checkOrAdd(err)
 	sets.addBattery(batteryInfos)
+
+	powerInfos, err := d.PowerSupply()
+	errs.checkOrAdd(err)
+	sets.addPower(powerInfos)
 
 	return sets, errs.Error()
 }

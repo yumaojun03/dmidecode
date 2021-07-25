@@ -3,6 +3,7 @@ package dmidecode
 import (
 	"errors"
 	"fmt"
+	"github.com/yumaojun03/dmidecode/parser/power"
 	"strings"
 
 	"github.com/yumaojun03/dmidecode/parser/baseboard"
@@ -34,6 +35,7 @@ func NewInformationSet() *InformationSet {
 		memoryDevice:    []*memory.MemoryDevice{},
 		slot:            []*slot.SystemSlot{},
 		battery:         []*battery.Information{},
+		power:           []*power.Information{},
 	}
 }
 
@@ -53,6 +55,7 @@ type InformationSet struct {
 	memoryDevice    []*memory.MemoryDevice
 	slot            []*slot.SystemSlot
 	battery         []*battery.Information
+	power           []*power.Information
 }
 
 // Print 打印所有
@@ -95,6 +98,9 @@ func (s *InformationSet) Print() {
 	}
 	for i := range s.battery {
 		fmt.Println(s.battery[i])
+	}
+	for i := range s.power {
+		fmt.Println(s.power[i])
 	}
 }
 
@@ -148,6 +154,10 @@ func (s *InformationSet) addSlot(infos []*slot.SystemSlot) {
 
 func (s *InformationSet) addBattery(infos []*battery.Information) {
 	s.battery = infos
+}
+
+func (s *InformationSet) addPower(infos []*power.Information) {
+	s.power = infos
 }
 
 // NewErrorSet todo

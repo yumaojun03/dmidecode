@@ -121,6 +121,12 @@ func main() {
 		for i := range infos {
 			fmt.Println(infos[i])
 		}
+	case "power", "39":
+		infos, err := decoder.PowerSupply()
+		checkDecodeErr(t, err)
+		for i := range infos {
+			fmt.Println(infos[i])
+		}
 	case "41":
 		einfos, err := decoder.OnboardExtended()
 		checkDecodeErr(t, err)
