@@ -15,7 +15,7 @@ func (b RuntimeSize) String() string {
 }
 
 // RomSize todo
-type RomSize byte
+type RomSize uint
 
 func (b RomSize) String() string {
 	return fmt.Sprintf("%d kB", b)
