@@ -27,3 +27,62 @@ func TestParse(t *testing.T) {
 		t.Log(bios)
 	}
 }
+
+func TestParseUUIDNotPresent(t *testing.T) {
+	s := &smbios.Structure{
+		Header: smbios.Header{
+			Type:   1,
+			Length: 27,
+			Handle: 256,
+		},
+		Formatted: []byte{0x1, 0x2, 0x3, 0x4, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x06, 0x0, 0x0},
+		Strings:   []string{"Xen", "HVM domU", "4.7.2-2.2", "b2dd7d04-a3eb-21e7-8222-a637629b1bfa"},
+	}
+	bios, err := system.Parse(s)
+	if assert.NoError(t, err) {
+		t.Log(bios)
+	}
+	if !assert.Equal(t, bios.UUID, "Not present") {
+		t.Log("all 0 in uuid field should get not present")
+		t.FailNow()
+	}
+}
+
+func TestParseUUIDNotSettable(t *testing.T) {
+	s := &smbios.Structure{
+		Header: smbios.Header{
+			Type:   1,
+			Length: 27,
+			Handle: 256,
+		},
+		Formatted: []byte{0x1, 0x2, 0x3, 0x4, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0x06, 0x0, 0x0},
+		Strings:   []string{"Xen", "HVM domU", "4.7.2-2.2", "b2dd7d04-a3eb-21e7-8222-a637629b1bfa"},
+	}
+	bios, err := system.Parse(s)
+	if assert.NoError(t, err) {
+		t.Log(bios)
+	}
+	if !assert.Equal(t, bios.UUID, "Settable") {
+		t.Log("all 0xff in uuid field should be Not present but settable")
+		t.FailNow()
+	}
+}
+
+func TestParseUUIDWith0xff(t *testing.T) {
+	s := &smbios.Structure{
+		Header: smbios.Header{
+			Type:   1,
+			Length: 27,
+			Handle: 256,
+		},
+		Formatted: []byte{0x1, 0x2, 0x3, 0x4, 0xff, 0xfe, 0xfd, 0xfc, 0xfb, 0xfa, 0xf9, 0xf8, 0xf7, 0xf6, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0x06, 0x0, 0x0},
+		Strings:   []string{"Xen", "HVM domU", "4.7.2-2.2", "b2dd7d04-a3eb-21e7-8222-a637629b1bfa"},
+	}
+	bios, err := system.Parse(s)
+	if assert.NoError(t, err) {
+		t.Log(bios)
+	}
+	if !assert.Equal(t, bios.UUID, "FCFDFEFF-FAFB-F8F9-F7F6-FFFFFFFFFFFF") {
+		t.FailNow()
+	}
+}
