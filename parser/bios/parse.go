@@ -16,7 +16,7 @@ func Parse(s *smbios.Structure) (info *Information, err error) {
 		BIOSVersion:            s.GetString(0x1),
 		ReleaseDate:            s.GetString(0x4),
 		StartingAddressSegment: sas,
-		RomSize:                RomSize(64 * (s.GetByte(0x05) + 1)),
+		RomSize:                RomSize(64 * (uint(s.GetByte(0x05)) + 1)),
 		RuntimeSize:            RuntimeSize((uint(0x10000) - uint(sas)) << 4),
 		Characteristics:        Characteristics(s.U64(0x06, 0x08)),
 		CharacteristicsExt1:    Ext1(s.GetByte(0x08)),
