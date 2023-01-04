@@ -23,6 +23,7 @@ func ParseMemoryDevice(s *smbios.Structure) (info *MemoryDevice, err error) {
 		Speed:                      s.U16(0x11, 0x13),
 		Manufacturer:               s.GetString(0x13),
 		SerialNumber:               s.GetString(0x14),
+		AssetTag:                   s.GetString(0x15),
 		PartNumber:                 s.GetString(0x16),
 		Attributes:                 s.GetByte(0x17),
 		ExtendedSize:               s.U32(0x18, 0x1c),
