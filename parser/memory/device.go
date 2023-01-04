@@ -31,6 +31,7 @@ type MemoryDevice struct {
 	MinimumVoltage             uint16
 	MaximumVoltage             uint16
 	ConfiguredVoltage          uint16
+	MemoryTechnology           MemoryTechnology
 }
 
 func (m MemoryDevice) String() string {
@@ -56,7 +57,8 @@ func (m MemoryDevice) String() string {
 		"\tConfigured Memory Clock Speed: %d\n"+
 		"\tMinimum voltage: %d\n"+
 		"\tMaximum voltage: %d\n"+
-		"\tConfigured voltage: %d",
+		"\tConfigured voltage: %d"+
+		"\tMemory Technology: %x",
 		m.PhysicalMemoryArrayHandle,
 		m.ErrorInformationHandle,
 		m.TotalWidth,
@@ -79,5 +81,6 @@ func (m MemoryDevice) String() string {
 		m.MinimumVoltage,
 		m.MaximumVoltage,
 		m.ConfiguredVoltage,
+		m.MemoryTechnology,
 	)
 }

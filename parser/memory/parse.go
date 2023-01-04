@@ -31,6 +31,7 @@ func ParseMemoryDevice(s *smbios.Structure) (info *MemoryDevice, err error) {
 		MinimumVoltage:             s.U16(0x1e, 0x20),
 		MaximumVoltage:             s.U16(0x20, 0x22),
 		ConfiguredVoltage:          s.U16(0x22, 0x24),
+		MemoryTechnology:           MemoryTechnology(s.GetByte(0x24)),
 	}
 
 	return info, nil

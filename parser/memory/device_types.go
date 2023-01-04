@@ -166,3 +166,36 @@ func (m MemoryDeviceTypeDetail) String() string {
 
 	return strings.Join(d, ",")
 }
+
+type MemoryTechnology uint8
+
+const (
+	MemoryTechnologyOther                 MemoryTechnology = 0x01
+	MemoryTechnologyUnknown               MemoryTechnology = 0x02
+	MemoryTechnologyDRAM                  MemoryTechnology = 0x03
+	MemoryTechnologyNVDIMMN               MemoryTechnology = 0x04
+	MemoryTechnologyNVDIMMF               MemoryTechnology = 0x05
+	MemoryTechnologyNVDIMMP               MemoryTechnology = 0x06
+	MemoryTechnologyIntelPersistentMemory MemoryTechnology = 0x07
+)
+
+func (m MemoryTechnology) String() string {
+	switch m {
+	case MemoryTechnologyOther:
+		return "Other"
+	case MemoryTechnologyUnknown:
+		return "Unknown"
+	case MemoryTechnologyDRAM:
+		return "DRAM"
+	case MemoryTechnologyNVDIMMN:
+		return "NVDIMM-N"
+	case MemoryTechnologyNVDIMMF:
+		return "NVDIMM-F"
+	case MemoryTechnologyNVDIMMP:
+		return "NVDIMM-P"
+	case MemoryTechnologyIntelPersistentMemory:
+		return "Intel persistent memory"
+	default:
+		return "Unknown"
+	}
+}
