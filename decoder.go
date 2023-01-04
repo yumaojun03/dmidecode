@@ -13,6 +13,7 @@ import (
 	"github.com/yumaojun03/dmidecode/parser/port"
 	"github.com/yumaojun03/dmidecode/parser/processor"
 	"github.com/yumaojun03/dmidecode/parser/slot"
+	"github.com/yumaojun03/dmidecode/parser/supply"
 	"github.com/yumaojun03/dmidecode/parser/system"
 	"github.com/yumaojun03/dmidecode/smbios"
 )
@@ -58,6 +59,8 @@ func New() (*Decoder, error) {
 			d.systemSlots = append(d.systemSlots, ss[i])
 		case smbios.PortableBattery:
 			d.portableBattery = append(d.portableBattery, ss[i])
+		case smbios.PowerSupply:
+			d.systemPowerSupply = append(d.systemPowerSupply, ss[i])
 		default:
 		}
 	}
@@ -85,6 +88,7 @@ type Decoder struct {
 	memoryDevice           []*smbios.Structure
 	systemSlots            []*smbios.Structure
 	portableBattery        []*smbios.Structure
+	systemPowerSupply      []*smbios.Structure
 }
 
 // Debug 开关Debug
@@ -277,6 +281,21 @@ func (d *Decoder) Slot() ([]*slot.SystemSlot, error) {
 	for i := range d.systemSlots {
 		d.println(d.systemSlots[i])
 		info, err := slot.Parse(d.systemSlots[i])
+		if err != nil {
+			return nil, err
+		}
+		infos = append(infos, info)
+	}
+
+	return infos, nil
+}
+
+// SystemPowerSupply 解析System Power Supply信息
+func (d *Decoder) SystemPowerSupply() ([]*supply.SystemPowerSupply, error) {
+	infos := make([]*supply.SystemPowerSupply, 0, len(d.systemPowerSupply))
+	for i := range d.systemPowerSupply {
+		d.println(d.systemPowerSupply[i])
+		info, err := supply.Parse(d.systemPowerSupply[i])
 		if err != nil {
 			return nil, err
 		}
