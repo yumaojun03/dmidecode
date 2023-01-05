@@ -87,11 +87,11 @@ func (s SupplyCharacteristics) PowerSupplyStatus() string {
 	if s&(1<<1) > 0 {
 		t := (s >> 7) & 0x07
 		if t >= 0x01 && t <= 0x05 {
-			return fmt.Sprintf("Status: Present, %s", chars[t-0x01])
+			return fmt.Sprintf("Present, %s", chars[t-0x01])
 		}
 		return outOfSpec
 	} else {
-		return fmt.Sprintf("Status: Not Present")
+		return "Not Present"
 	}
 }
 
@@ -150,7 +150,7 @@ func (p *Information) String() string {
 			"\tPlugged: %s\n"+
 			"\tHot Replaceable: %s\n"+
 			"\tType: %s\n"+
-			"\t%s\n",
+			"\tStatus: %s\n",
 		int(p.PowerUnitGroup),
 		p.Location,
 		p.DeviceName,
