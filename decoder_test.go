@@ -12,8 +12,8 @@ func TestSystemPowerSupply(t *testing.T) {
 	dmi, err := dmidecode.New()
 	assert.Equal(t, err, nil)
 
-	info, err := dmi.SystemPowerSupply()
+	info, err := dmi.PowerSupply()
 	assert.Equal(t, err, nil)
 
-	fmt.Println(info[0].String())
+	fmt.Println(info[0])
 }

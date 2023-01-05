@@ -121,6 +121,12 @@ func main() {
 		for i := range infos {
 			fmt.Println(infos[i])
 		}
+	case "power", "39":
+		infos, err := decoder.PowerSupply()
+		checkDecodeErr(t, err)
+		for i := range infos {
+			fmt.Println(infos[i])
+		}
 	case "41":
 		einfos, err := decoder.OnboardExtended()
 		checkDecodeErr(t, err)
@@ -177,7 +183,6 @@ func checkDecodeErr(t string, err error) {
 func usage() {
 	fmt.Fprintf(os.Stderr, `dmidecode version: 0.1.3
 Usage: dmidecode [-h] [-d] [-t type]
-
 Options:
 `)
 	flag.PrintDefaults()

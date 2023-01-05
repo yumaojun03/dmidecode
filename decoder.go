@@ -3,6 +3,8 @@ package dmidecode
 import (
 	"fmt"
 
+	"github.com/yumaojun03/dmidecode/parser/power"
+
 	"github.com/yumaojun03/dmidecode/parser/baseboard"
 	"github.com/yumaojun03/dmidecode/parser/battery"
 	"github.com/yumaojun03/dmidecode/parser/bios"
@@ -13,7 +15,6 @@ import (
 	"github.com/yumaojun03/dmidecode/parser/port"
 	"github.com/yumaojun03/dmidecode/parser/processor"
 	"github.com/yumaojun03/dmidecode/parser/slot"
-	"github.com/yumaojun03/dmidecode/parser/supply"
 	"github.com/yumaojun03/dmidecode/parser/system"
 	"github.com/yumaojun03/dmidecode/smbios"
 )
@@ -60,7 +61,7 @@ func New() (*Decoder, error) {
 		case smbios.PortableBattery:
 			d.portableBattery = append(d.portableBattery, ss[i])
 		case smbios.PowerSupply:
-			d.systemPowerSupply = append(d.systemPowerSupply, ss[i])
+			d.powerSupply = append(d.powerSupply, ss[i])
 		default:
 		}
 	}
@@ -88,7 +89,7 @@ type Decoder struct {
 	memoryDevice           []*smbios.Structure
 	systemSlots            []*smbios.Structure
 	portableBattery        []*smbios.Structure
-	systemPowerSupply      []*smbios.Structure
+	powerSupply            []*smbios.Structure
 }
 
 // Debug 开关Debug
@@ -290,27 +291,25 @@ func (d *Decoder) Slot() ([]*slot.SystemSlot, error) {
 	return infos, nil
 }
 
-// SystemPowerSupply 解析System Power Supply信息
-func (d *Decoder) SystemPowerSupply() ([]*supply.SystemPowerSupply, error) {
-	infos := make([]*supply.SystemPowerSupply, 0, len(d.systemPowerSupply))
-	for i := range d.systemPowerSupply {
-		d.println(d.systemPowerSupply[i])
-		info, err := supply.Parse(d.systemPowerSupply[i])
-		if err != nil {
-			return nil, err
-		}
-		infos = append(infos, info)
-	}
-
-	return infos, nil
-}
-
 // Battery 解析battery信息
 func (d *Decoder) Battery() ([]*battery.Information, error) {
 	infos := make([]*battery.Information, 0, len(d.portableBattery))
 	for i := range d.portableBattery {
 		d.println(d.portableBattery[i])
 		info, err := battery.Parse(d.portableBattery[i])
+		if err != nil {
+			return nil, err
+		}
+		infos = append(infos, info)
+	}
+	return infos, nil
+}
+
+func (d *Decoder) PowerSupply() ([]*power.Information, error) {
+	infos := make([]*power.Information, 0, len(d.powerSupply))
+	for i := range d.powerSupply {
+		d.println(d.powerSupply[i])
+		info, err := power.Parse(d.powerSupply[i])
 		if err != nil {
 			return nil, err
 		}
@@ -386,6 +385,10 @@ func (d *Decoder) ALL() (*InformationSet, error) {
 	batteryInfos, err := d.Battery()
 	errs.checkOrAdd(err)
 	sets.addBattery(batteryInfos)
+
+	powerInfos, err := d.PowerSupply()
+	errs.checkOrAdd(err)
+	sets.addPower(powerInfos)
 
 	return sets, errs.Error()
 }
