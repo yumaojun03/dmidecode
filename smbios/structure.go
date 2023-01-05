@@ -164,8 +164,11 @@ func (s *Structure) GetString(offset int) string {
 		return "Unknown"
 	}
 	index := s.Formatted[offset]
-
 	if index == 0 {
+		return "Unknown"
+	}
+
+	if len(s.Strings) < int(index) {
 		return "Unknown"
 	}
 
