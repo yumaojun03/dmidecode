@@ -24,7 +24,7 @@ func (s Information) String() string {
 		"\tSpecification Version: %s\n"+
 		"\tFirmware Revision: %s\n"+
 		"\tDescription: %s\n"+
-		"\tCharacteristics: \n%s\n"+
+		"\tCharacteristics: \n%s"+
 		"\tOEM-specific Information: %s\n",
 		s.Header.Handle,
 		s.Header.Type,
