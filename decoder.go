@@ -14,6 +14,7 @@ import (
 	"github.com/yumaojun03/dmidecode/parser/processor"
 	"github.com/yumaojun03/dmidecode/parser/slot"
 	"github.com/yumaojun03/dmidecode/parser/system"
+	"github.com/yumaojun03/dmidecode/parser/tpm"
 	"github.com/yumaojun03/dmidecode/smbios"
 )
 
@@ -58,6 +59,8 @@ func New() (*Decoder, error) {
 			d.systemSlots = append(d.systemSlots, ss[i])
 		case smbios.PortableBattery:
 			d.portableBattery = append(d.portableBattery, ss[i])
+		case smbios.TPMDevice:
+			d.tpmDevice = append(d.tpmDevice, ss[i])
 		default:
 		}
 	}
@@ -85,6 +88,7 @@ type Decoder struct {
 	memoryDevice           []*smbios.Structure
 	systemSlots            []*smbios.Structure
 	portableBattery        []*smbios.Structure
+	tpmDevice              []*smbios.Structure
 }
 
 // Debug 开关Debug
@@ -300,6 +304,20 @@ func (d *Decoder) Battery() ([]*battery.Information, error) {
 	return infos, nil
 }
 
+// Tpm 解析TpmDevice信息
+func (d *Decoder) TpmDevice() ([]*tpm.Information, error) {
+	infos := make([]*tpm.Information, 0, len(d.tpmDevice))
+	for i := range d.tpmDevice {
+		d.println(d.tpmDevice[i])
+		info, err := tpm.Parse(d.tpmDevice[i])
+		if err != nil {
+			return nil, err
+		}
+		infos = append(infos, info)
+	}
+	return infos, nil
+}
+
 // EntryPoint todo
 func (d *Decoder) EntryPoint() *smbios.EntryPoint {
 	return d.eps
@@ -368,5 +386,8 @@ func (d *Decoder) ALL() (*InformationSet, error) {
 	errs.checkOrAdd(err)
 	sets.addBattery(batteryInfos)
 
+	tpmInfos, err := d.TpmDevice()
+	errs.checkOrAdd(err)
+	sets.addTpm(tpmInfos)
 	return sets, errs.Error()
 }

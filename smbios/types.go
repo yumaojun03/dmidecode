@@ -46,7 +46,8 @@ const (
 	PowerSupply
 	AdditionalInformation
 	OnBoardDevicesExtendedInformation
-	ManagementControllerHostInterface               /*42*/
+	ManagementControllerHostInterface               
+	TPMDevice  					/*43*/
 	Inactive                          StructureType = 126
 	EndOfTable                        StructureType = 127
 )
@@ -95,7 +96,8 @@ func (b StructureType) String() string {
 		"Power Supply",
 		"Additional Information",
 		"Onboard Device",
-		"Management Controller Host Interface", /* 42 */
+		"Management Controller Host Interface", 
+		"TPMDevice",/* 43 */
 	}
 	return types[b]
 }
