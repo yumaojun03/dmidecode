@@ -57,16 +57,16 @@ func (t TpmDeviceCharacteristics) String() string {
 		characteristics +=  fmt.Sprintf("\t\tReserved1\n")
 	}
 	if t.NotSupported() {
-		characteristics += fmt.Sprintf("\t\tNotSupported\n")
+		characteristics += fmt.Sprintf("\t\tTPM Device characteristics not supported\n")
 	}
 	if t.FamilyConfigurableViaFirmware() {
-		characteristics += fmt.Sprintf("\t\tFamilyConfigurableViaFirmware\n")
+		characteristics += fmt.Sprintf("\t\tFamily configurable via firmware update\n")
 	}
 	if t.FamilyConfigurableViaSoftware() {
-		characteristics += fmt.Sprintf("\t\tFamilyConfigurableViaSoftware\n")
+		characteristics += fmt.Sprintf("\t\tFamily configurable via platform software support\n")
 	}
 	if  t.FamilyConfigurableViaOem() {
-		characteristics += fmt.Sprintf("\t\tFamilyConfigurableViaOem\n")
+		characteristics += fmt.Sprintf("\t\tFamily configurable via OEM proprietary mechanism\n")
 	}
 	return characteristics
 }
