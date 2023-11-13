@@ -16,6 +16,7 @@ import (
 	"github.com/yumaojun03/dmidecode/parser/processor"
 	"github.com/yumaojun03/dmidecode/parser/slot"
 	"github.com/yumaojun03/dmidecode/parser/system"
+	"github.com/yumaojun03/dmidecode/parser/tpm"
 )
 
 // NewInformationSet todo
@@ -34,6 +35,7 @@ func NewInformationSet() *InformationSet {
 		memoryDevice:    []*memory.MemoryDevice{},
 		slot:            []*slot.SystemSlot{},
 		battery:         []*battery.Information{},
+		tpm:             []*tpm.Information{},
 	}
 }
 
@@ -53,6 +55,7 @@ type InformationSet struct {
 	memoryDevice    []*memory.MemoryDevice
 	slot            []*slot.SystemSlot
 	battery         []*battery.Information
+	tpm             []*tpm.Information
 }
 
 // Print 打印所有
@@ -95,6 +98,9 @@ func (s *InformationSet) Print() {
 	}
 	for i := range s.battery {
 		fmt.Println(s.battery[i])
+	}
+	for i := range s.tpm {
+		fmt.Println(s.tpm[i])
 	}
 }
 
@@ -148,6 +154,10 @@ func (s *InformationSet) addSlot(infos []*slot.SystemSlot) {
 
 func (s *InformationSet) addBattery(infos []*battery.Information) {
 	s.battery = infos
+}
+
+func (s *InformationSet) addTpm(infos []*tpm.Information) {
+	s.tpm = infos
 }
 
 // NewErrorSet todo
