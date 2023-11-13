@@ -42,7 +42,7 @@ func main() {
 	case "":
 		infos, err := decoder.ALL()
 		checkDecodeErr(t, err)
-		infos.Print()
+		infos.Println()
 	case "bios", "0":
 		infos, err := decoder.BIOS()
 		checkDecodeErr(t, err)
@@ -117,6 +117,12 @@ func main() {
 		}
 	case "battery", "22":
 		infos, err := decoder.Battery()
+		checkDecodeErr(t, err)
+		for i := range infos {
+			fmt.Println(infos[i])
+		}
+	case "power", "39":
+		infos, err := decoder.PowerSupply()
 		checkDecodeErr(t, err)
 		for i := range infos {
 			fmt.Println(infos[i])

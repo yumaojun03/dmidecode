@@ -3,6 +3,8 @@ package dmidecode
 import (
 	"fmt"
 
+	"github.com/yumaojun03/dmidecode/parser/power"
+
 	"github.com/yumaojun03/dmidecode/parser/baseboard"
 	"github.com/yumaojun03/dmidecode/parser/battery"
 	"github.com/yumaojun03/dmidecode/parser/bios"
@@ -61,6 +63,8 @@ func New() (*Decoder, error) {
 			d.portableBattery = append(d.portableBattery, ss[i])
 		case smbios.TPMDevice:
 			d.tpmDevice = append(d.tpmDevice, ss[i])
+		case smbios.PowerSupply:
+			d.powerSupply = append(d.powerSupply, ss[i])
 		default:
 		}
 	}
@@ -89,6 +93,7 @@ type Decoder struct {
 	systemSlots            []*smbios.Structure
 	portableBattery        []*smbios.Structure
 	tpmDevice              []*smbios.Structure
+	powerSupply            []*smbios.Structure
 }
 
 // Debug 开关Debug
@@ -304,12 +309,24 @@ func (d *Decoder) Battery() ([]*battery.Information, error) {
 	return infos, nil
 }
 
-// Tpm 解析TpmDevice信息
 func (d *Decoder) TpmDevice() ([]*tpm.Information, error) {
 	infos := make([]*tpm.Information, 0, len(d.tpmDevice))
 	for i := range d.tpmDevice {
 		d.println(d.tpmDevice[i])
 		info, err := tpm.Parse(d.tpmDevice[i])
+		if err != nil {
+			return nil, err
+		}
+		infos = append(infos, info)
+	}
+	return infos, nil
+}
+
+func (d *Decoder) PowerSupply() ([]*power.Information, error) {
+	infos := make([]*power.Information, 0, len(d.powerSupply))
+	for i := range d.powerSupply {
+		d.println(d.powerSupply[i])
+		info, err := power.Parse(d.powerSupply[i])
 		if err != nil {
 			return nil, err
 		}
@@ -389,5 +406,10 @@ func (d *Decoder) ALL() (*InformationSet, error) {
 	tpmInfos, err := d.TpmDevice()
 	errs.checkOrAdd(err)
 	sets.addTpm(tpmInfos)
+
+	powerInfos, err := d.PowerSupply()
+	errs.checkOrAdd(err)
+	sets.addPower(powerInfos)
+
 	return sets, errs.Error()
 }

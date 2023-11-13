@@ -5,6 +5,8 @@ import (
 	"fmt"
 	"strings"
 
+	"github.com/yumaojun03/dmidecode/parser/power"
+
 	"github.com/yumaojun03/dmidecode/parser/baseboard"
 	"github.com/yumaojun03/dmidecode/parser/battery"
 	"github.com/yumaojun03/dmidecode/parser/bios"
@@ -36,6 +38,7 @@ func NewInformationSet() *InformationSet {
 		slot:            []*slot.SystemSlot{},
 		battery:         []*battery.Information{},
 		tpm:             []*tpm.Information{},
+		power:           []*power.Information{},
 	}
 }
 
@@ -56,10 +59,11 @@ type InformationSet struct {
 	slot            []*slot.SystemSlot
 	battery         []*battery.Information
 	tpm             []*tpm.Information
+	power           []*power.Information
 }
 
 // Print 打印所有
-func (s *InformationSet) Print() {
+func (s *InformationSet) Println() {
 	for i := range s.bios {
 		fmt.Println(s.bios[i])
 	}
@@ -101,6 +105,9 @@ func (s *InformationSet) Print() {
 	}
 	for i := range s.tpm {
 		fmt.Println(s.tpm[i])
+	}
+	for i := range s.power {
+		fmt.Println(s.power[i])
 	}
 }
 
@@ -158,6 +165,10 @@ func (s *InformationSet) addBattery(infos []*battery.Information) {
 
 func (s *InformationSet) addTpm(infos []*tpm.Information) {
 	s.tpm = infos
+}
+
+func (s *InformationSet) addPower(infos []*power.Information) {
+	s.power = infos
 }
 
 // NewErrorSet todo

@@ -29,5 +29,5 @@ func main() {
 	// 获取所有信息
 	infos_all, err := dmi.ALL()
 	checkError(err)
-	infos_all.Print()
+	infos_all.Println()
 }
