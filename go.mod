@@ -2,6 +2,8 @@ module github.com/yumaojun03/dmidecode
 
 go 1.12
 
+replace github.com/digitalocean/go-smbios => github.com/yywing/go-smbios v0.0.0-20230329060422-61721fc260d3
+
 require (
 	github.com/davecgh/go-spew v1.1.1 // indirect
 	github.com/digitalocean/go-smbios v0.0.0-20180907143718-390a4f403a8e
